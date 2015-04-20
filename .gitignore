@@ -30,4 +30,4 @@
 
 # Debug files
 *.dSYM/
-Debug/
+Debug/*
