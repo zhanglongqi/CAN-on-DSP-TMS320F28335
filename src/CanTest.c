@@ -1,17 +1,16 @@
-
-
 #include "DSP2833x_Device.h"     // Device Header Include File
 #include "CanTest.h"
 #include "usDelay.h"
+#define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
 
 // Global variable for this example
-Uint32  ErrorCount;
-Uint32  PassCount;
-Uint32  MessageReceivedCount;
+Uint32 ErrorCount;
+Uint32 PassCount;
+Uint32 MessageReceivedCount;
 
-Uint32  TestMbox1 ;
-Uint32  TestMbox2 ;
-Uint32  TestMbox3 ;
+Uint32 TestMbox1;
+Uint32 TestMbox2;
+Uint32 TestMbox3;
 
 struct ECAN_REGS ECanbShadow;
 
@@ -19,17 +18,17 @@ struct ECAN_REGS ECanbShadow;
 static void mailbox_check(int32 T1, int32 T2, int32 T3);
 static void mailbox_read(int16 i);
 
-void InitCanTest(void){
-    MessageReceivedCount = 0;
-    ErrorCount = 0;
-    PassCount = 0;
+void InitCanTest(void) {
+	MessageReceivedCount = 0;
+	ErrorCount = 0;
+	PassCount = 0;
 
-    TestMbox1 = 0;
-    TestMbox2 = 0;
-    TestMbox3 = 0;
+	TestMbox1 = 0;
+	TestMbox2 = 0;
+	TestMbox3 = 0;
 
-    InitECanb();
-    // Mailboxs can be written to 16-bits or 32-bits at a time
+	InitECanb();
+	// Mailboxs can be written to 16-bits or 32-bits at a time
 	// Write to the MSGID field of TRANSMIT mailboxes MBOX0 - 15
 	ECanbMboxes.MBOX0.MSGID.all = 0x9555AAA0;
 	ECanbMboxes.MBOX1.MSGID.all = 0x9555AAA1;
@@ -94,55 +93,54 @@ void InitCanTest(void){
 	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 8;
 	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 8;
 
-
 	// Write to the mailbox RAM field of MBOX0 - 15
-	ECanbMboxes.MBOX0.MDL.all = 0x9555AAA0;
+	ECanbMboxes.MBOX0.MDL.all = 0x0000AAA0;
 	ECanbMboxes.MBOX0.MDH.all = 0x89ABCDEF;
 
 	ECanbMboxes.MBOX1.MDL.all = 0x9555AAA1;
 	ECanbMboxes.MBOX1.MDH.all = 0x89ABCDEF;
 
-	ECanbMboxes.MBOX2.MDL.all = 0x9555AAA2;
-	ECanbMboxes.MBOX2.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX3.MDL.all = 0x9555AAA3;
-	ECanbMboxes.MBOX3.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX4.MDL.all = 0x9555AAA4;
-	ECanbMboxes.MBOX4.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX5.MDL.all = 0x9555AAA5;
-	ECanbMboxes.MBOX5.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX6.MDL.all = 0x9555AAA6;
-	ECanbMboxes.MBOX6.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX7.MDL.all = 0x9555AAA7;
-	ECanbMboxes.MBOX7.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX8.MDL.all = 0x9555AAA8;
-	ECanbMboxes.MBOX8.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX9.MDL.all = 0x9555AAA9;
-	ECanbMboxes.MBOX9.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX10.MDL.all = 0x9555AAAA;
-	ECanbMboxes.MBOX10.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX11.MDL.all = 0x9555AAAB;
-	ECanbMboxes.MBOX11.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX12.MDL.all = 0x9555AAAC;
-	ECanbMboxes.MBOX12.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX13.MDL.all = 0x9555AAAD;
-	ECanbMboxes.MBOX13.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX14.MDL.all = 0x9555AAAE;
-	ECanbMboxes.MBOX14.MDH.all = 0x89ABCDEF;
-
-	ECanbMboxes.MBOX15.MDL.all = 0x9555AAAF;
-	ECanbMboxes.MBOX15.MDH.all = 0x89ABCDEF;
+//	ECanbMboxes.MBOX2.MDL.all = 0x9555AAA2;
+//	ECanbMboxes.MBOX2.MDH.all = 0x89ABCDAA;
+//
+//	ECanbMboxes.MBOX3.MDL.all = 0x9555AAA3;
+//	ECanbMboxes.MBOX3.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX4.MDL.all = 0x9555AAA4;
+//	ECanbMboxes.MBOX4.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX5.MDL.all = 0x9555AAA5;
+//	ECanbMboxes.MBOX5.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX6.MDL.all = 0x9555AAA6;
+//	ECanbMboxes.MBOX6.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX7.MDL.all = 0x9555AAA7;
+//	ECanbMboxes.MBOX7.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX8.MDL.all = 0x9555AAA8;
+//	ECanbMboxes.MBOX8.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX9.MDL.all = 0x9555AAA9;
+//	ECanbMboxes.MBOX9.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX10.MDL.all = 0x9555AAAA;
+//	ECanbMboxes.MBOX10.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX11.MDL.all = 0x9555AAAB;
+//	ECanbMboxes.MBOX11.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX12.MDL.all = 0x9555AAAC;
+//	ECanbMboxes.MBOX12.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX13.MDL.all = 0x9555AAAD;
+//	ECanbMboxes.MBOX13.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX14.MDL.all = 0x9555AAAE;
+//	ECanbMboxes.MBOX14.MDH.all = 0x89ABCDEF;
+//
+//	ECanbMboxes.MBOX15.MDL.all = 0x9555AAAF;
+//	ECanbMboxes.MBOX15.MDH.all = 0x89ABCDEF;
 
 	// Since this write is to the entire register (instead of a bit
 	// field) a shadow register is not required.
@@ -154,48 +152,50 @@ void InitCanTest(void){
 	EALLOW;
 	ECanbShadow.CANMC.all = ECanbRegs.CANMC.all;
 	ECanbShadow.CANMC.bit.STM = 1;    // Configure CAN for self-test mode
+
+	ECanbShadow.CANMC.bit.STM = 0;    // Configure CAN for normal mode
+
 	ECanbRegs.CANMC.all = ECanbShadow.CANMC.all;
 	EDIS;
 }
 
-void testCan(){
+void testCan() {
 	Uint16 j;
-	ECanbRegs.CANTRS.all = 0x0000FFFF;  // Set TRS for all transmit mailboxes
-//	DELAY_US(10000) ;
-   while(ECanbRegs.CANTA.all != 0x0000FFFF ) {}  // Wait for all TAn bits to be set..
-   ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
-   MessageReceivedCount++;
+	ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
+	//DELAY_US(100000) ;
+	do {
+		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
+	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
-   //Read from Receive mailboxes and begin checking for data */
-   for(j=0; j<16; j++)         // Read & check 16 mailboxes
-   {
-	  mailbox_read(j);         // This func reads the indicated mailbox data
-	  mailbox_check(TestMbox1,TestMbox2,TestMbox3); // Checks the received data
-   }
+//	while (ECanbRegs.CANTA.all != 0x0000FFFF) {
+//	}  // Wait for all TAn bits to be set..
+	ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
+	MessageReceivedCount++;
+	BLINK_LED();
+	//Read from Receive mailboxes and begin checking for data */
+	for (j = 0; j < 32; j++)         // Read & check 16 mailboxes
+			{
+		mailbox_read(j);         // This func reads the indicated mailbox data
+		mailbox_check(TestMbox1, TestMbox2, TestMbox3); // Checks the received data
+	}
 }
 
 // This function reads out the contents of the indicated
 // by the Mailbox number (MBXnbr).
-static void mailbox_read(int16 MBXnbr)
-{
-   volatile struct MBOX *Mailbox;
-   Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
-   TestMbox1 = Mailbox->MDL.all; // = 0x9555AAAn (n is the MBX number)
-   TestMbox2 = Mailbox->MDH.all; // = 0x89ABCDEF (a constant)
-   TestMbox3 = Mailbox->MSGID.all;// = 0x9555AAAn (n is the MBX number)
+static void mailbox_read(int16 MBXnbr) {
+	volatile struct MBOX *Mailbox;
+	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
+	TestMbox1 = Mailbox->MDL.all; // = 0x9555AAAn (n is the MBX number)
+	TestMbox2 = Mailbox->MDH.all; // = 0x89ABCDEF (a constant)
+	TestMbox3 = Mailbox->MSGID.all; // = 0x9555AAAn (n is the MBX number)
 
 } // MSGID of a rcv MBX is transmitted as the MDL data.
 
-
-static void mailbox_check(int32 T1, int32 T2, int32 T3)
-{
-    if((T1 != T3) || ( T2 != 0x89ABCDEF))
-    {
-       ErrorCount++;
-    }
-    else
-    {
-       PassCount++;
-    }
+static void mailbox_check(int32 T1, int32 T2, int32 T3) {
+	if ((T1 != T3) || (T2 != 0x89ABCDEF)) {
+		ErrorCount++;
+	} else {
+		PassCount++;
+	}
 }
 

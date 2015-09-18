@@ -6,7 +6,6 @@
 #include "DSP2833x_Examples.h"
 #include "GPIO_Driver.h"
 
-
 #include <string.h>
 
 #define READY 1
@@ -16,16 +15,16 @@
 #define FAULT 5
 #define DEBUG 6
 
-
 //Uchar uip_buf[1024] ;
-Uint32 Cnt = 0 ;
+Uint32 Cnt = 0;
 
-Uchar TestBuff[100] ;
+Uchar TestBuff[100];
 
 void updateADBG();
 
 void main(void) {
-	Uint16 i ;
+
+	Uint16 i;
 	//0. init Sys
 	//0. init Sys
 	InitSysCtrl();
@@ -33,15 +32,15 @@ void main(void) {
 
 	//1. =========================interrupt=============================================
 	// Disable CPU interrupts and clear all CPU interrupt flags:
-	DINT ;
+	DINT;
 	IER = 0x0000;
 	IFR = 0x0000;
 
 	//ram Funcs
 
-	MemCopy(&RamfuncsLoadStart,&RamfuncsLoadEnd,&RamfuncsRunStart) ;
+	MemCopy(&RamfuncsLoadStart, &RamfuncsLoadEnd, &RamfuncsRunStart);
 
-	InitFlash() ;
+	InitFlash();
 	// Initialize the PIE vector table with pointers to the shell Interrupt
 	// Service Routines (ISR).
 	// This will populate the entire table, even if the interrupt
@@ -52,7 +51,8 @@ void main(void) {
 
 	// Interrupts that are used in this example are re-mapped to
 	// ISR functions found within this file.
-	EALLOW;  // This is needed to write to EALLOW protected registers
+	EALLOW;
+	// This is needed to write to EALLOW protected registers
 //	PieVectTable.SEQ1INT = &ADC_SEQ1_EOC_isr;
 	EDIS;
 
@@ -62,8 +62,10 @@ void main(void) {
 //	PieCtrlRegs.PIEIER1.bit.INTx1 = 1 ;
 //	PieCtrlRegs.PIEIER1.bit.INTx7 = 1 ;
 
-	EINT;   // Enable Global interrupt INTM
-	ERTM;   // Enable Global realtime interrupt DBGM
+	EINT;
+	// Enable Global interrupt INTM
+	ERTM;
+	// Enable Global realtime interrupt DBGM
 
 	//=========================Core Module=============
 
@@ -83,29 +85,31 @@ void main(void) {
 
 	//for loop
 	//for test
-	InitCanTest() ;
+
+	InitCanTest();
+
+
 	{
-		TestBuff[0] = 0xDD ;
-		TestBuff[1] = 0xDD ;
-		TestBuff[2] = 0xDD ;
-		TestBuff[3] = 0xe0 ;
-		TestBuff[4] = 0x18 ;
-		TestBuff[5] = 0x23 ;
-		TestBuff[6] = 0xDD ;
-		TestBuff[7] = 0xDD ;
-		TestBuff[8] = 0xDD ;
-		TestBuff[9] = 0xe0 ;
-		TestBuff[10] = 0x18 ;
-		TestBuff[11] = 0x24 ;
+		TestBuff[0] = 0xDD;
+		TestBuff[1] = 0xDD;
+		TestBuff[2] = 0xDD;
+		TestBuff[3] = 0xe0;
+		TestBuff[4] = 0x18;
+		TestBuff[5] = 0x23;
+		TestBuff[6] = 0xDD;
+		TestBuff[7] = 0xDD;
+		TestBuff[8] = 0xDD;
+		TestBuff[9] = 0xe0;
+		TestBuff[10] = 0x18;
+		TestBuff[11] = 0x24;
 	}
 
-	for(;;){
-		testCan() ;
+	for (;;) {
+		testCan();
 	}
 }
 
-
-void TestInMain(){
+void TestInMain() {
 
 }
 
