@@ -162,7 +162,7 @@ void InitCanTest(void) {
 void testCan() {
 	Uint16 j;
 	ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
-	//DELAY_US(100000) ;
+	DELAY_US(100000) ;
 	do {
 		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
 	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
