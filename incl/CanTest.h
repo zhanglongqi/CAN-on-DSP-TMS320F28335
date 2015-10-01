@@ -20,7 +20,7 @@ extern Uint32  TestMbox2 = 0;
 extern Uint32  TestMbox3 = 0;
 extern struct ECAN_REGS ECanaShadow;
 
-void InitCanTest(void);
+void configureEcanB(void);
 void testCan() ;
 
 #endif /* CANTEST_H_ */

@@ -89,7 +89,7 @@ main (void)
   //for loop
   //for test
 
-  InitCanTest ();
+  configureEcanB ();
 
     {
       TestBuff[0] = 0xDD;
@@ -110,11 +110,5 @@ main (void)
     {
       testCan ();
     }
-}
-
-void
-TestInMain ()
-{
-
 }
 
