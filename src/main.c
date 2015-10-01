@@ -15,19 +15,10 @@
 #define FAULT 5
 #define DEBUG 6
 
-//Uchar uip_buf[1024] ;
-Uint32 Cnt = 0;
-
-Uchar TestBuff[100];
-
-void
-updateADBG ();
-
 void
 main (void)
 {
 
-  Uint16 i;
   //0. init Sys
   //0. init Sys
   InitSysCtrl ();
@@ -81,30 +72,8 @@ main (void)
   InitGpio ();
   //eCan
   InitECanbGpio ();
-  //=======================I2C======================================
-//	initI2C() ;		//used to retrieve battery data info from Smart cells
-  //first take system to Ready State from NULL
-//	StateMgr.transfer_State(&StateMgr,NULL,READY) ;
-
-  //for loop
-  //for test
 
   configureEcanB ();
-
-    {
-      TestBuff[0] = 0xDD;
-      TestBuff[1] = 0xDD;
-      TestBuff[2] = 0xDD;
-      TestBuff[3] = 0xe0;
-      TestBuff[4] = 0x18;
-      TestBuff[5] = 0x23;
-      TestBuff[6] = 0xDD;
-      TestBuff[7] = 0xDD;
-      TestBuff[8] = 0xDD;
-      TestBuff[9] = 0xe0;
-      TestBuff[10] = 0x18;
-      TestBuff[11] = 0x24;
-    }
 
   for (;;)
     {

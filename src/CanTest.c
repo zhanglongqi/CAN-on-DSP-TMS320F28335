@@ -153,11 +153,6 @@ configureEcanB (void)
 //	ECanbMboxes.MBOX15.MDL.all = 0x9555AAAF;
 //	ECanbMboxes.MBOX15.MDH.all = 0x89ABCDEF;
 
-  // Since this write is to the entire register (instead of a bit
-  // field) a shadow register is not required.
-  EALLOW;
-  ECanbRegs.CANMIM.all = 0xFFFFFFFF;
-
   // Configure the eCAN for self test mode
   // Enable the enhanced features of the eCAN.
   EALLOW;
