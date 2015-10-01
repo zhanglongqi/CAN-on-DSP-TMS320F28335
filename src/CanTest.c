@@ -190,7 +190,7 @@ configureEcanB (void)
 void
 testCan ()
 {
-//  Uint16 j;
+//******************used for transmit begin*****************
 //  ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
 //  DELAY_US(100000);
 //  do
@@ -202,6 +202,7 @@ testCan ()
 ////	while (ECanbRegs.CANTA.all != 0x0000FFFF) {
 ////	}  // Wait for all TAn bits to be set..
 //  ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
+//******************used for transmit end*****************
 
   BLINK_LED();
 
