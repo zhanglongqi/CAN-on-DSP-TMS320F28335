@@ -249,7 +249,7 @@ InitECanb (void)		// Initialize eCAN-B module
 #if (CPU_FRQ_150MHZ)                       // CPU_FRQ_150MHz is defined in DSP2833x_Examples.h
   /* The following block for all 150 MHz SYSCLKOUT (75 MHz CAN clock) - default. Bit rate = 1 Mbps
    See Note at end of file */
-  ECanbShadow.CANBTC.bit.BRPREG = 19; // 4 for 1MHz, 9 for 500KHz, 19 for 250KHz
+  ECanbShadow.CANBTC.bit.BRPREG = 4; // 4 for 1MHz, 9 for 500KHz, 19 for 250KHz
   ECanbShadow.CANBTC.bit.TSEG2REG = 2;
   ECanbShadow.CANBTC.bit.TSEG1REG = 10;
 #endif
