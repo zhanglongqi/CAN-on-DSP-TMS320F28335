@@ -191,17 +191,17 @@ void
 testCan ()
 {
 //******************used for transmit begin*****************
-//  ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
-//  DELAY_US(100000);
-//  do
-//    {
-//      ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
-//    }
-//  while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
-//
-////	while (ECanbRegs.CANTA.all != 0x0000FFFF) {
-////	}  // Wait for all TAn bits to be set..
-//  ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
+  ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
+  DELAY_US(100000);
+  do
+    {
+      ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
+    }
+  while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
+
+//	while (ECanbRegs.CANTA.all != 0x0000FFFF) {
+//	}  // Wait for all TAn bits to be set..
+  ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
 //******************used for transmit end*****************
 
   BLINK_LED();
@@ -259,32 +259,12 @@ UserSetInt ()
   IFR = 0x0000;
 
   InitPieVectTable (); //// This function initializes the PIE vector table to a known state.
-
   EALLOW;
-//  PieVectTable.EPWM5_INT = &User_EPWM1_isr;	//PWM5 interrupt	//New
-//  PieVectTable.TINT0 = &cpu_timer0_isr;			//Timer 0
-//  PieVectTable.SCIRXINTC = &scic_rx_isr;			//SCI-C
-//  PieVectTable.XINT13 = &cpu_timer1_isr;
-//  PieVectTable.TINT2 = &cpu_timer2_isr;
   PieVectTable.ECAN1INTB = &ecan1_intb_isr;		//ECAN interrupt
-
   EDIS;
 
-  IER |= M_INT1;
-  IER |= M_INT3;
-  IER |= M_INT8;	//RXD-C
-  IER |= M_INT13;
-  IER |= M_INT14;
   IER |= M_INT9;
-
-  PieCtrlRegs.PIEIER1.bit.INTx7 = 1;	//timer0
-  PieCtrlRegs.PIEIER3.bit.INTx5 = 1;  	//enable ePWM5_INT		//New
-  PieCtrlRegs.PIEIER8.bit.INTx5 = 1;  // RXD-C
   PieCtrlRegs.PIEIER9.bit.INTx8 = 1;  // ECAN-B
-
-  PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-  PieCtrlRegs.PIEACK.all = PIEACK_GROUP3;
-  PieCtrlRegs.PIEACK.all = PIEACK_GROUP8;
   PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
 
   // Enable global Interrupts and higher priority real-time debug events:
