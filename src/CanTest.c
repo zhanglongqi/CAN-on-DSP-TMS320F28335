@@ -15,16 +15,6 @@ Uint32 TestMbox3;
 
 struct ECAN_REGS ECanbShadow;
 
-// Prototype statements for functions found within this file.
-static void
-mailbox_check (int32 T1, int32 T2, int32 T3);
-static void
-mailbox_read (int16 i);
-void
-init_interrupt ();
-void
-UserSetInt ();
-
 void
 configureEcanB (void)
 {
@@ -193,10 +183,20 @@ configureEcanB (void)
 }
 
 void
-testCan ()
+send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id)
 {
+
+  volatile struct MBOX *Mailbox;
+//  for(MBXnbr)
+//    {
+  Mailbox = &ECanbMboxes.MBOX15 + MBXnbr;
+  Mailbox->MDL.all = low; // = 0x9555AAAn (n is the MBX number)
+  Mailbox->MDH.all = high; // = 0x89ABCDEF (a constant)
+  Mailbox->MSGID.all = id;
+//    }
 //******************used for transmit begin*****************
-  ECanbRegs.CANTRS.all = 0x00000003;  // Set TRS for all transmit mailboxes
+  ECanbRegs.CANTRS.all = 0x0000000F;  // Set TRS for all transmit mailboxes
+
   DELAY_US(100000);
   do
     {

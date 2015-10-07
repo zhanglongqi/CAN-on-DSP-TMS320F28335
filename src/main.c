@@ -77,7 +77,10 @@ main (void)
 
   for (;;)
     {
-      testCan ();
+      //      send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id);
+      send_data (0, 0xABABABAB, 0xCDCDCDCD, 0x10101010);
+      send_data (1, 0x12345678, 0x87654321, 0x11111111);
+
     }
 }
 
