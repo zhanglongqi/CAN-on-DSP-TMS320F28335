@@ -153,6 +153,11 @@ configureEcanB (void)
 //	ECanbMboxes.MBOX15.MDL.all = 0x9555AAAF;
 //	ECanbMboxes.MBOX15.MDH.all = 0x89ABCDEF;
 
+  // enable sys clock for ecanb
+  EALLOW;
+  SysCtrlRegs.PCLKCR0.bit.ECANBENCLK = 1;    // eCAN-B
+  EDIS;
+
   // Configure the eCAN for self test mode
   // Enable the enhanced features of the eCAN.
   EALLOW;
