@@ -1,7 +1,5 @@
-#include "DSP2833x_Device.h"     // Device Header Include File
-#include "CanTest.h"
-#include "usDelay.h"
-#include "DSP2833x_ECan.h"
+#include <CanBus.h>
+
 #define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
 
 // Global variable for this example

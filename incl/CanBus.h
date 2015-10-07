@@ -1,12 +1,16 @@
 /*
- * CanTest.h
+ * CanBus.h
  *
  *  Created on: Sep 9, 2013
  *      Author: Mike
  */
 
 #ifndef CANTEST_H_
-#define CANTEST_H_
+#define CANBUS_H_
+
+#include "DSP2833x_Device.h"
+#include "usDelay.h"
+#include "DSP2833x_ECan.h"
 
 // Global variable for this example
 extern Uint32 ErrorCount;
