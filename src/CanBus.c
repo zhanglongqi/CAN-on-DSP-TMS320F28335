@@ -6,11 +6,9 @@
 Uint32 ErrorCount;
 Uint32 PassCount;
 Uint32 MessageReceivedCount;
-
-Uint32 TestMbox1;
-Uint32 TestMbox2;
-Uint32 TestMbox3;
-
+Uint32 TestMbox1 = 0;
+Uint32 TestMbox2 = 0;
+Uint32 TestMbox3 = 0;
 struct ECAN_REGS ECanbShadow;
 
 void
@@ -24,45 +22,47 @@ configureEcanB (void)
   TestMbox2 = 0;
   TestMbox3 = 0;
 
-  UserSetInt (); // Initialize interrupt and enable interrupt
+  InitECanbGpio ();
 
+  UserSetInt (); // Initialize interrupt and enable interrupt
   InitECanb ();
+
   // Mailboxs can be written to 16-bits or 32-bits at a time
   // Write to the MSGID field of TRANSMIT mailboxes MBOX0 - 15
-  ECanbMboxes.MBOX0.MSGID.all = 0x9555AAA0;
-  ECanbMboxes.MBOX1.MSGID.all = 0x9555AAA1;
-  ECanbMboxes.MBOX2.MSGID.all = 0x9555AAA2;
-  ECanbMboxes.MBOX3.MSGID.all = 0x9555AAA3;
-  ECanbMboxes.MBOX4.MSGID.all = 0x9555AAA4;
-  ECanbMboxes.MBOX5.MSGID.all = 0x9555AAA5;
-  ECanbMboxes.MBOX6.MSGID.all = 0x9555AAA6;
-  ECanbMboxes.MBOX7.MSGID.all = 0x9555AAA7;
-  ECanbMboxes.MBOX8.MSGID.all = 0x9555AAA8;
-  ECanbMboxes.MBOX9.MSGID.all = 0x9555AAA9;
-  ECanbMboxes.MBOX10.MSGID.all = 0x9555AAAA;
-  ECanbMboxes.MBOX11.MSGID.all = 0x9555AAAB;
-  ECanbMboxes.MBOX12.MSGID.all = 0x9555AAAC;
-  ECanbMboxes.MBOX13.MSGID.all = 0x9555AAAD;
-  ECanbMboxes.MBOX14.MSGID.all = 0x9555AAAE;
-  ECanbMboxes.MBOX15.MSGID.all = 0x9555AAAF;
+  ECanbMboxes.MBOX0.MSGID.all = 0x1555AAA0;
+  ECanbMboxes.MBOX1.MSGID.all = 0x1555AAA1;
+  ECanbMboxes.MBOX2.MSGID.all = 0x1555AAA2;
+  ECanbMboxes.MBOX3.MSGID.all = 0x1555AAA3;
+  ECanbMboxes.MBOX4.MSGID.all = 0x1555AAA4;
+  ECanbMboxes.MBOX5.MSGID.all = 0x1555AAA5;
+  ECanbMboxes.MBOX6.MSGID.all = 0x1555AAA6;
+  ECanbMboxes.MBOX7.MSGID.all = 0x1555AAA7;
+  ECanbMboxes.MBOX8.MSGID.all = 0x1555AAA8;
+  ECanbMboxes.MBOX9.MSGID.all = 0x1555AAA9;
+  ECanbMboxes.MBOX10.MSGID.all = 0x1555AAAA;
+  ECanbMboxes.MBOX11.MSGID.all = 0x1555AAAB;
+  ECanbMboxes.MBOX12.MSGID.all = 0x1555AAAC;
+  ECanbMboxes.MBOX13.MSGID.all = 0x1555AAAD;
+  ECanbMboxes.MBOX14.MSGID.all = 0x1555AAAE;
+  ECanbMboxes.MBOX15.MSGID.all = 0x1555AAAF;
 
   // Write to the MSGID field of RECEIVE mailboxes MBOX16 - 31
-  ECanbMboxes.MBOX16.MSGID.all = 0x9555AAA0;
-  ECanbMboxes.MBOX17.MSGID.all = 0x9555AAA1;
-  ECanbMboxes.MBOX18.MSGID.all = 0x9555AAA2;
-  ECanbMboxes.MBOX19.MSGID.all = 0x9555AAA3;
-  ECanbMboxes.MBOX20.MSGID.all = 0x9555AAA4;
-  ECanbMboxes.MBOX21.MSGID.all = 0x9555AAA5;
-  ECanbMboxes.MBOX22.MSGID.all = 0x9555AAA6;
-  ECanbMboxes.MBOX23.MSGID.all = 0x9555AAA7;
-  ECanbMboxes.MBOX24.MSGID.all = 0x9555AAA8;
-  ECanbMboxes.MBOX25.MSGID.all = 0x9555AAA9;
-  ECanbMboxes.MBOX26.MSGID.all = 0x9555AAAA;
-  ECanbMboxes.MBOX27.MSGID.all = 0x9555AAAB;
-  ECanbMboxes.MBOX28.MSGID.all = 0x9555AAAC;
-  ECanbMboxes.MBOX29.MSGID.all = 0x9555AAAD;
-  ECanbMboxes.MBOX30.MSGID.all = 0x9555AAAE;
-  ECanbMboxes.MBOX31.MSGID.all = 0x9555AAAF;
+  ECanbMboxes.MBOX16.MSGID.all = 0x1555AAA0;
+  ECanbMboxes.MBOX17.MSGID.all = 0x1555AAA1;
+  ECanbMboxes.MBOX18.MSGID.all = 0x1555AAA2;
+  ECanbMboxes.MBOX19.MSGID.all = 0x1555AAA3;
+  ECanbMboxes.MBOX20.MSGID.all = 0x1555AAA4;
+  ECanbMboxes.MBOX21.MSGID.all = 0x1555AAA5;
+  ECanbMboxes.MBOX22.MSGID.all = 0x1555AAA6;
+  ECanbMboxes.MBOX23.MSGID.all = 0x1555AAA7;
+  ECanbMboxes.MBOX24.MSGID.all = 0x1555AAA8;
+  ECanbMboxes.MBOX25.MSGID.all = 0x1555AAA9;
+  ECanbMboxes.MBOX26.MSGID.all = 0x1555AAAA;
+  ECanbMboxes.MBOX27.MSGID.all = 0x1555AAAB;
+  ECanbMboxes.MBOX28.MSGID.all = 0x1555AAAC;
+  ECanbMboxes.MBOX29.MSGID.all = 0x1555AAAD;
+  ECanbMboxes.MBOX30.MSGID.all = 0x1555AAAE;
+  ECanbMboxes.MBOX31.MSGID.all = 0x1555AAAF;
 
   // Configure Mailboxes 0-15 as Tx, 16-31 as Rx
   // Since this write is to the entire register (instead of a bit
@@ -91,55 +91,6 @@ configureEcanB (void)
   ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 8;
   ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 8;
   ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 8;
-
-  // Write to the mailbox RAM field of MBOX0 - 15
-  ECanbMboxes.MBOX0.MDL.all = 0x0000AAA0;
-  ECanbMboxes.MBOX0.MDH.all = 0x89ABCDEF;
-
-  ECanbMboxes.MBOX1.MDL.all = 0x9555AAA1;
-  ECanbMboxes.MBOX1.MDH.all = 0x89ABCDEF;
-
-//	ECanbMboxes.MBOX2.MDL.all = 0x9555AAA2;
-//	ECanbMboxes.MBOX2.MDH.all = 0x89ABCDAA;
-//
-//	ECanbMboxes.MBOX3.MDL.all = 0x9555AAA3;
-//	ECanbMboxes.MBOX3.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX4.MDL.all = 0x9555AAA4;
-//	ECanbMboxes.MBOX4.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX5.MDL.all = 0x9555AAA5;
-//	ECanbMboxes.MBOX5.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX6.MDL.all = 0x9555AAA6;
-//	ECanbMboxes.MBOX6.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX7.MDL.all = 0x9555AAA7;
-//	ECanbMboxes.MBOX7.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX8.MDL.all = 0x9555AAA8;
-//	ECanbMboxes.MBOX8.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX9.MDL.all = 0x9555AAA9;
-//	ECanbMboxes.MBOX9.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX10.MDL.all = 0x9555AAAA;
-//	ECanbMboxes.MBOX10.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX11.MDL.all = 0x9555AAAB;
-//	ECanbMboxes.MBOX11.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX12.MDL.all = 0x9555AAAC;
-//	ECanbMboxes.MBOX12.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX13.MDL.all = 0x9555AAAD;
-//	ECanbMboxes.MBOX13.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX14.MDL.all = 0x9555AAAE;
-//	ECanbMboxes.MBOX14.MDH.all = 0x89ABCDEF;
-//
-//	ECanbMboxes.MBOX15.MDL.all = 0x9555AAAF;
-//	ECanbMboxes.MBOX15.MDH.all = 0x89ABCDEF;
 
   // enable sys clock for ecanb
   EALLOW;
@@ -181,21 +132,19 @@ configureEcanB (void)
 }
 
 void
-send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id)
+send_data (int16 MBXnbr, Uint32 low, Uint32 high)
 {
 
   volatile struct MBOX *Mailbox;
 //  for(MBXnbr)
 //    {
-  Mailbox = &ECanbMboxes.MBOX15 + MBXnbr;
-  Mailbox->MDL.all = low; // = 0x9555AAAn (n is the MBX number)
+  Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
+  Mailbox->MDL.all = low; // = 0x1555AAAn (n is the MBX number)
   Mailbox->MDH.all = high; // = 0x89ABCDEF (a constant)
-  Mailbox->MSGID.all = id;
 //    }
 //******************used for transmit begin*****************
-  ECanbRegs.CANTRS.all = 0x0000000F;  // Set TRS for all transmit mailboxes
+  ECanbRegs.CANTRS.all = 0x00000001;  // Set TRS for all transmit mailboxes
 
-  DELAY_US(100000);
   do
     {
       ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
@@ -218,24 +167,13 @@ mailbox_read (int16 MBXnbr)
 {
   volatile struct MBOX *Mailbox;
   Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
-  TestMbox1 = Mailbox->MDL.all; // = 0x9555AAAn (n is the MBX number)
+  TestMbox1 = Mailbox->MDL.all; // = 0x1555AAAn (n is the MBX number)
   TestMbox2 = Mailbox->MDH.all; // = 0x89ABCDEF (a constant)
-  TestMbox3 = Mailbox->MSGID.all; // = 0x9555AAAn (n is the MBX number)
+  TestMbox3 = Mailbox->MSGID.all; // = 0x1555AAAn (n is the MBX number)
 
 } // MSGID of a rcv MBX is transmitted as the MDL data.
 
-static void
-mailbox_check (int32 T1, int32 T2, int32 T3)
-{
-  if ((T1 != T3) || (T2 != 0x89ABCDEF))
-    {
-      ErrorCount++;
-    }
-  else
-    {
-      PassCount++;
-    }
-}
+
 
 interrupt void
 ecan1_intb_isr (void)
@@ -244,7 +182,6 @@ ecan1_intb_isr (void)
   for (j = 16; j < 32; j++)         // Read & check 16 mailboxes
     {
       mailbox_read (j);         // This func reads the indicated mailbox data
-      mailbox_check (TestMbox1, TestMbox2, TestMbox3); // Checks the received data
     }
 
   ECanbRegs.CANRMP.bit.RMP2 = 1;   // Clear all TAn

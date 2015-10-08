@@ -1,6 +1,4 @@
 /*
-// TI File $Revision: /main/8 $
-// Checkin $Date: June 2, 2008   11:12:24 $
 //###########################################################################
 //
 // FILE:    DSP2833x_Headers_nonBIOS.cmd
@@ -19,6 +17,11 @@
 //          For BIOS applications, please use the DSP2833x_Headers_BIOS.cmd file
 //          which does not include the PieVectorTable structure.
 //
+//###########################################################################
+// $TI Release: F2833x/F2823x Header Files and Peripheral Examples V140 $
+// $Release Date: March  4, 2015 $
+// $Copyright: Copyright (C) 2007-2015 Texas Instruments Incorporated -
+//             http://www.ti.com/ ALL RIGHTS RESERVED $
 //###########################################################################
 */
 

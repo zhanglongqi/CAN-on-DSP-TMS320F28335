@@ -5,8 +5,9 @@
 #include "DSP2833x_Device.h"     // Device Header Include File
 #include "DSP2833x_Examples.h"
 #include "GPIO_Driver.h"
+#include "usDelay.h"
 
-#include <string.h>
+#include <CanBus.h>
 
 #define READY 1
 #define SOFTSTART 2
@@ -74,13 +75,12 @@ main (void)
   InitECanbGpio ();
 
   configureEcanB ();
-
-  for (;;)
+  Uint32 i = 0;
+  for (i = 0;; i++)
     {
       //      send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id);
-      send_data (0, 0xABABABAB, 0xCDCDCDCD, 0x10101010);
-      send_data (1, 0x12345678, 0x87654321, 0x11111111);
-
+      send_data (0, i, i + 1);
+      DELAY_US(100000);
     }
 }
 
