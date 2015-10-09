@@ -141,7 +141,7 @@ send_data (int16 MBXnbr, Uint32 low, Uint32 high)
   Mailbox->MDH.all = high; // = 0x89ABCDEF (a constant)
 //    }
 //******************used for transmit begin*****************
-  ECanbRegs.CANTRS.all = 0x00000001;  // Set TRS for all transmit mailboxes
+  ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
 
   do
     {
@@ -149,8 +149,12 @@ send_data (int16 MBXnbr, Uint32 low, Uint32 high)
     }
   while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
-//	while (ECanbRegs.CANTA.all != 0x0000FFFF) {
-//	}  // Wait for all TAn bits to be set..
+  do
+    {
+      ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
+    }
+  while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
+
   ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
 //******************used for transmit end*****************
 

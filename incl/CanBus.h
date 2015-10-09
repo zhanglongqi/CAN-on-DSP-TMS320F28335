@@ -11,6 +11,14 @@
 #include "DSP2833x_Device.h"
 #include "DSP2833x_GlobalPrototypes.h"
 
+//mailbox number
+//
+#define MBX_RES 0 // resource manager
+#define MBX_BIC 1 // bidirectional converter
+#define MBX_PV 2 // PV converter
+#define MBX_BAT 3 // Battery converter
+#define MBX_WIN 4 // wind turbine converter
+
 // Global variable for this example
 extern Uint32 ErrorCount;
 extern Uint32 PassCount;

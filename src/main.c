@@ -79,7 +79,7 @@ main (void)
   for (i = 0;; i++)
     {
       //      send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id);
-      send_data (0, i, i + 1);
+      send_data (MBX_BIC, i, i + 1);
       DELAY_US(1000000);
     }
 }
