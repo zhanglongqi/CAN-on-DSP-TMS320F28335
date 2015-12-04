@@ -31,3 +31,5 @@
 # Debug files
 *.dSYM/
 Debug/*
+.launches/CanTest.launch
+.ccsproject
