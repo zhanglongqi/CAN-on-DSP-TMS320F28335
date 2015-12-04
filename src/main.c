@@ -71,8 +71,6 @@ main (void)
   //===============user module=======================
   //initialize GPIO
   InitGpio ();
-  //eCan
-  InitECanbGpio ();
 
   configureEcanB ();
   Uint32 i = 0;
