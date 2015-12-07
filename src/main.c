@@ -44,30 +44,11 @@ main (void)
   // This function is found in DSP2833x_PieVect.c.c0
   InitPieVectTable ();
 
-  // Interrupts that are used in this example are re-mapped to
-  // ISR functions found within this file.
-  EALLOW;
-  // This is needed to write to EALLOW protected registers
-//	PieVectTable.SEQ1INT = &ADC_SEQ1_EOC_isr;
-  EDIS;
-
-  // Enable CPU INT1 which is connected to SEQ INT:
-//	IER |= M_INT1;
-  // Enable SEQ1 INT in the PIE: Group 1 interrupt 1-1
-//	PieCtrlRegs.PIEIER1.bit.INTx1 = 1 ;
-//	PieCtrlRegs.PIEIER1.bit.INTx7 = 1 ;
-
   EINT;
   // Enable Global interrupt INTM
   ERTM;
   // Enable Global realtime interrupt DBGM
 
-  //=========================Core Module=============
-
-  //====================Tmr============================
-//	initUserTmr1(I2C_TMR) ; //in ms
-//	EvMgrPrt->addEvent(EvMgrPrt,&UserTmr1) ;
-//	UserTmr1.addEvCallback(&UserTmr1,Response_UserTmr1) ;
   //===============user module=======================
   //initialize GPIO
   InitGpio ();
