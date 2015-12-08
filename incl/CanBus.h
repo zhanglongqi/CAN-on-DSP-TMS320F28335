@@ -10,6 +10,7 @@
 
 #include "DSP2833x_Device.h"
 #include "DSP2833x_GlobalPrototypes.h"
+#include "DSP2833x_Examples.h"
 
 //mailbox number
 //
@@ -30,18 +31,18 @@ extern Uint32 TestMbox3;
 extern struct ECAN_REGS ECanbShadow;
 
 void
-configureEcanB (void);
+configureEcanB(void);
 
 // Prototype statements for functions found within this file.
 void
-send_data (int16 MBXnbr, Uint32 low, Uint32 high);
+send_data(int16 MBXnbr, Uint32 low, Uint32 high);
 static void
-mailbox_check (int32 T1, int32 T2, int32 T3);
+mailbox_check(int32 T1, int32 T2, int32 T3);
 static void
-mailbox_read (int16 i);
+mailbox_read(int16 i);
 void
-init_interrupt ();
-void
-UserSetInt ();
+init_interrupt();
+
+interrupt void ecan1_intb_isr(void);
 
 #endif /* CANBUS_H_ */
