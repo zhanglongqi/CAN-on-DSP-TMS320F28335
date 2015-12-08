@@ -80,6 +80,28 @@
 		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>28335_RAM_lnk.cmd</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_common/cmd/28335_RAM_lnk.cmd</locationURI>
+		</link>
+		<link>
+			<name>lib/DSP2833x_CpuTimers.c</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_common/source/DSP2833x_CpuTimers.c</locationURI>
+		</link>
+		<link>
+			<name>lib/DSP2833x_ECan.c</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_common/source/DSP2833x_ECan.c</locationURI>
+		</link>
+		<link>
+			<name>lib/DSP2833x_GlobalVariableDefs.c</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_headers/source/DSP2833x_GlobalVariableDefs.c</locationURI>
+		</link>
+	</linkedResources>
 	<variableList>
 		<variable>
 			<name>INSTALLROOT_2833X_V140</name>

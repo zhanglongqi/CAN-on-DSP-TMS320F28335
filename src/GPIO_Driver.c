@@ -7,7 +7,7 @@
 #include "DSP2833x_Device.h"     // Device Header Include File
 
 //IO initialize.
-void InitGpio(void) {
+void configureLED(void) {
 	EALLOW;
 	//set LED
 	GpioCtrlRegs.GPAMUX2.bit.GPIO26 = 0;  //GPIO26

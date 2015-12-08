@@ -6,14 +6,17 @@
  */
 #include "timer.h"
 
-
 void configureTimer0() {
-	DINT; // Disable CPU interrupts
+	DINT;
+	// Disable CPU interrupts
 
+	// Interrupts that are used in this example are re-mapped to
+	// ISR functions found within this file.
 	EALLOW;
 	PieVectTable.TINT0 = &cpu_timer0_isr;			//Timer 0
-	PieCtrlRegs.PIEIER1.bit.INTx7 = 1;	//timer0
 	EDIS;
+
+	InitCpuTimers();
 
 #if (CPU_FRQ_150MHZ)
 // Configure CPU-Timer 0 to interrupt every second:
@@ -23,7 +26,6 @@ void configureTimer0() {
 
 #endif
 
-	InitCpuTimers();
 
 	// To ensure precise timing, use write-only instructions to write to the entire register. Therefore, if any
 	// of the configuration bits are changed in ConfigCpuTimer and InitCpuTimers (in DSP2833x_CpuTimers.h), the
@@ -38,14 +40,17 @@ void configureTimer0() {
 	PieCtrlRegs.PIEIER1.bit.INTx7 = 1;
 
 	// Enable global Interrupts and higher priority real-time debug events:
-	EINT;   // Enable Global interrupt INTM
-	ERTM;   // Enable Global realtime interrupt DBGM
-	//StartCpuTimer0();
+	EINT;
+	// Enable Global interrupt INTM
+	ERTM;
+	// Enable Global realtime interrupt DBGM
+	StartCpuTimer0();
 }
 
 interrupt void cpu_timer0_isr(void) {
 
 	//5us
+	CpuTimer0.InterruptCount++;
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
