@@ -19,10 +19,10 @@ void configureTimer0() {
 	InitCpuTimers();
 
 #if (CPU_FRQ_150MHZ)
-// Configure CPU-Timer 0 to interrupt every second:
-// 150MHz CPU Freq, 1 second Period (in uSeconds)
+// Configure CPU-Timer 0 to interrupt every millisecond:
+// 150MHz CPU Freq, 1 millisecond Period (in uSeconds)
 
-	ConfigCpuTimer(&CpuTimer0, 150, 1000000);
+	ConfigCpuTimer(&CpuTimer0, 150, 1000);
 
 #endif
 

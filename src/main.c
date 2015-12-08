@@ -48,10 +48,14 @@ void main(void) {
 	// Enable Global realtime interrupt DBGM
 
 	//===============user module=======================
-	//initialize GPIO
+
 	configureLED();
+
 	configureTimer0();
+
 	configureEcanB();
+
+	// can bus testing
 	Uint32 i = 0;
 	for (i = 0;; i++) {
 		//      send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id);
