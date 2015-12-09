@@ -49,7 +49,8 @@ void configureTimer0() {
 
 interrupt void cpu_timer0_isr(void) {
 
-	//5us
+
+
 	CpuTimer0.InterruptCount++;
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
