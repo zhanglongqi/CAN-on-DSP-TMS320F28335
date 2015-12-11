@@ -101,6 +101,11 @@
 			<type>1</type>
 			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_headers/source/DSP2833x_GlobalVariableDefs.c</locationURI>
 		</link>
+		<link>
+			<name>lib/DSP2833x_Sci.c</name>
+			<type>1</type>
+			<locationURI>INSTALLROOT_F2833X_V141/DSP2833x_common/source/DSP2833x_Sci.c</locationURI>
+		</link>
 	</linkedResources>
 	<variableList>
 		<variable>

@@ -9,7 +9,7 @@ Uint32 MessageReceivedCount;
 Uint32 TestMbox1 = 0;
 Uint32 TestMbox2 = 0;
 Uint32 TestMbox3 = 0;
-struct ECAN_REGS ECanbShadow;
+extern struct ECAN_REGS ECanbShadow;
 
 void configureEcanB(void) {
 	MessageReceivedCount = 0;
