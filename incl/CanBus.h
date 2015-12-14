@@ -15,20 +15,26 @@
 
 //mailbox number
 //
+#define BBB_ID 0x9555AAA0
 #define MBX_RES 0 // resource manager
 #define MBX_BIC 1 // bidirectional converter
 #define MBX_PV 2 // PV converter
 #define MBX_BAT 3 // Battery converter
 #define MBX_WIN 4 // wind turbine converter
+#define LED_INDEX 1
 
 typedef union {
     float32 f;
-    char c[4];
+    Uint16 c2[2];
 } CAN_DATA_UNION;
 
 // Global variable for this example
 extern struct MBOX can_msg;
 extern struct ECAN_REGS ECanbShadow;
+extern int16 new_data;
+
+#define TRUE 1
+#define FALSE 0
 
 void
 configureEcanB(void);

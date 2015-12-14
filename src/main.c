@@ -54,6 +54,25 @@ void main(void) {
 	configureTimer0();
 
 	configureEcanB();
+	for (;;) {
 
+		if (new_data) {
+			if (can_msg.MSGID.all == BBB_ID) {
+				CAN_DATA_UNION data;
+				data.f=39978.3;
+
+				data.c2[0] = can_msg.MDL.word.LOW_WORD;
+				data.c2[1] = can_msg.MDL.word.HI_WORD;
+
+				if (can_msg.MDH.byte.BYTE4 == LED_INDEX) {
+					if (data.f >= 1)
+						GpioDataRegs.GPASET.bit.GPIO26 = 1;
+					else
+						GpioDataRegs.GPACLEAR.bit.GPIO26 = 1;
+				}
+			}
+			new_data = FALSE;
+		}
+	}
 }
 

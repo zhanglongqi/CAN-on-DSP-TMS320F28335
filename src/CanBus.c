@@ -6,6 +6,7 @@
 
 struct MBOX can_msg;
 struct ECAN_REGS ECanbShadow;
+int16 new_data = FALSE;
 
 void configureEcanB(void) {
 
@@ -190,10 +191,8 @@ void send_data(int16 MBXnbr, char index, CAN_DATA_UNION data) {
 //    {
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
-	Mailbox->MDL.byte.BYTE0 = data.c[0];
-	Mailbox->MDL.byte.BYTE1 = data.c[1];
-	Mailbox->MDL.byte.BYTE2 = data.c[2];
-	Mailbox->MDL.byte.BYTE3 = data.c[3];
+	Mailbox->MDL.word.LOW_WORD = data.c2[0];
+	Mailbox->MDL.word.HI_WORD = data.c2[1];
 
 	Mailbox->MDH.byte.BYTE4 = index;
 //    }
@@ -210,9 +209,6 @@ void send_data(int16 MBXnbr, char index, CAN_DATA_UNION data) {
 
 	ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
 //******************used for transmit end*****************
-
-	BLINK_LED();
-
 }
 
 // This function reads out the contents of the indicated
@@ -230,11 +226,15 @@ interrupt void ecan1_intb_isr(void) {
 	int j;
 	for (j = 16; j < 32; j++) {         // Read 16 mailboxes
 		if ((ECanbRegs.CANRMP.all >> j) && 0x1) { // only read the mail box which received message
+
 			mailbox_read(j);       // This func reads the indicated mailbox data
-			ECanbRegs.CANRMP.all = ECanbRegs.CANRMP.all || (0x1 << j); // clear the Received-Message-Pending Register
+
+			ECanbShadow.CANRMP.all = ((Uint32) 1 << j);
+			ECanbRegs.CANRMP.all = ECanbShadow.CANRMP.all; // clear the Received-Message-Pending Register
 		}
 	}
 
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
+	new_data = TRUE;
 }
 
