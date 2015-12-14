@@ -1,6 +1,8 @@
 #include <CanBus.h>
 
 #define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
+#define LED_ON() GpioDataRegs.GPASET.bit.GPIO26 = 1
+#define LED_OFF() GpioDataRegs.GPACLEAR.bit.GPIO26 = 1
 
 // Global variable
 

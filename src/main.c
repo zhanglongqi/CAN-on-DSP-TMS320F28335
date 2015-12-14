@@ -66,9 +66,9 @@ void main(void) {
 
 				if (can_msg.MDH.byte.BYTE4 == LED_INDEX) {
 					if (data.f >= 1)
-						GpioDataRegs.GPASET.bit.GPIO26 = 1;
+						LED_ON();
 					else
-						GpioDataRegs.GPACLEAR.bit.GPIO26 = 1;
+						LED_OFF();
 				}
 			}
 			new_data = FALSE;
