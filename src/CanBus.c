@@ -2,23 +2,16 @@
 
 #define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
 
-// Global variable for this example
-Uint32 ErrorCount;
-Uint32 PassCount;
-Uint32 MessageReceivedCount;
-Uint32 TestMbox1 = 0;
-Uint32 TestMbox2 = 0;
-Uint32 TestMbox3 = 0;
+// Global variable
+
+struct MBOX can_msg;
 struct ECAN_REGS ECanbShadow;
 
 void configureEcanB(void) {
-	MessageReceivedCount = 0;
-	ErrorCount = 0;
-	PassCount = 0;
 
-	TestMbox1 = 0;
-	TestMbox2 = 0;
-	TestMbox3 = 0;
+	can_msg.MDL.all = 0;
+	can_msg.MDH.all = 0;
+	can_msg.MSGID.all = 0;
 
 	InitECanb();
 
@@ -222,9 +215,9 @@ void send_data(int16 MBXnbr, Uint32 low, Uint32 high) {
 static void mailbox_read(int16 MBXnbr) {
 	volatile struct MBOX *Mailbox;
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
-	TestMbox1 = Mailbox->MDL.all; // = 0x9555AAAn (n is the MBX number)
-	TestMbox2 = Mailbox->MDH.all; // = 0x89ABCDEF (a constant)
-	TestMbox3 = Mailbox->MSGID.all; // = 0x9555AAAn (n is the MBX number)
+	can_msg.MDL.all = Mailbox->MDL.all; // = 0x9555AAAn (n is the MBX number)
+	can_msg.MDH.all = Mailbox->MDH.all; // = 0x89ABCDEF (a constant)
+	can_msg.MSGID.all = Mailbox->MSGID.all; // = 0x9555AAAn (n is the MBX number)
 
 }
 

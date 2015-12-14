@@ -5,6 +5,7 @@
  *      Author: longqi
  */
 #include "timer.h"
+extern void send_data(int16 MBXnbr, Uint32 low, Uint32 high);
 
 void configureTimer0() {
 	DINT;
@@ -19,10 +20,10 @@ void configureTimer0() {
 	InitCpuTimers();
 
 #if (CPU_FRQ_150MHZ)
-// Configure CPU-Timer 0 to interrupt every millisecond:
-// 150MHz CPU Freq, 1 millisecond Period (in uSeconds)
+// Configure CPU-Timer 0 to interrupt every second:
+// 150MHz CPU Freq, 1 second Period (in uSeconds)
 
-	ConfigCpuTimer(&CpuTimer0, 150, 1000);
+	ConfigCpuTimer(&CpuTimer0, 150, 1000000);
 
 #endif
 
@@ -54,4 +55,5 @@ interrupt void cpu_timer0_isr(void) {
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
+	send_data(0, 0, 0);
 }

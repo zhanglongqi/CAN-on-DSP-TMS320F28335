@@ -21,13 +21,7 @@
 #define MBX_WIN 4 // wind turbine converter
 
 // Global variable for this example
-extern Uint32 ErrorCount;
-extern Uint32 PassCount;
-extern Uint32 MessageReceivedCount;
-
-extern Uint32 TestMbox1;
-extern Uint32 TestMbox2;
-extern Uint32 TestMbox3;
+extern struct MBOX can_msg;
 extern struct ECAN_REGS ECanbShadow;
 
 void

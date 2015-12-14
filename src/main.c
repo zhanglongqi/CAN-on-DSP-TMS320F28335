@@ -55,12 +55,5 @@ void main(void) {
 
 	configureEcanB();
 
-	// can bus testing
-	Uint32 i = 0;
-	for (i = 0;; i++) {
-		//      send_data (int16 MBXnbr, Uint32 low, Uint32 high, Uint32 id);
-		send_data(MBX_BIC, i, i + 1);
-		DELAY_US(1000000);
-	}
 }
 
