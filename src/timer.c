@@ -5,7 +5,7 @@
  *      Author: longqi
  */
 #include "timer.h"
-extern void send_data(int16 MBXnbr, Uint32 low, Uint32 high);
+#include "CanBus.h"
 
 void configureTimer0() {
 	DINT;
@@ -26,7 +26,6 @@ void configureTimer0() {
 	ConfigCpuTimer(&CpuTimer0, 150, 1000000);
 
 #endif
-
 
 	// To ensure precise timing, use write-only instructions to write to the entire register. Therefore, if any
 	// of the configuration bits are changed in ConfigCpuTimer and InitCpuTimers (in DSP2833x_CpuTimers.h), the
@@ -50,10 +49,13 @@ void configureTimer0() {
 
 interrupt void cpu_timer0_isr(void) {
 
-	//5us
 	CpuTimer0.InterruptCount++;
 
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
-	send_data(0, 0, 0);
+
+	char index = 0;
+	CAN_DATA_UNION data;
+	data.f=1;
+	send_data(0, index, data);
 }

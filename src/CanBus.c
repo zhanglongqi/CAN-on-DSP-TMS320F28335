@@ -183,14 +183,19 @@ void configureEcanB(void) {
 	EDIS;
 }
 
-void send_data(int16 MBXnbr, Uint32 low, Uint32 high) {
+void send_data(int16 MBXnbr, char index, CAN_DATA_UNION data) {
 
 	volatile struct MBOX *Mailbox;
 //  for(MBXnbr)
 //    {
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
-	Mailbox->MDL.all = low; // = 0x9555AAAn (n is the MBX number)
-	Mailbox->MDH.all = high; // = 0x89ABCDEF (a constant)
+
+	Mailbox->MDL.byte.BYTE0 = data.c[0];
+	Mailbox->MDL.byte.BYTE1 = data.c[1];
+	Mailbox->MDL.byte.BYTE2 = data.c[2];
+	Mailbox->MDL.byte.BYTE3 = data.c[3];
+
+	Mailbox->MDH.byte.BYTE4 = index;
 //    }
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
@@ -223,10 +228,8 @@ static void mailbox_read(int16 MBXnbr) {
 
 interrupt void ecan1_intb_isr(void) {
 	int j;
-	for (j = 16; j < 32; j++)         // Read 16 mailboxes
-			{
-		if ((ECanbRegs.CANRMP.all >> j) && 0x1) // only read the mail box which received message
-				{
+	for (j = 16; j < 32; j++) {         // Read 16 mailboxes
+		if ((ECanbRegs.CANRMP.all >> j) && 0x1) { // only read the mail box which received message
 			mailbox_read(j);       // This func reads the indicated mailbox data
 			ECanbRegs.CANRMP.all = ECanbRegs.CANRMP.all || (0x1 << j); // clear the Received-Message-Pending Register
 		}
