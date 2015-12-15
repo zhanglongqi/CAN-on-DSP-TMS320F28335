@@ -56,8 +56,15 @@ void main(void) {
 	configureEcanB();
 	for (;;) {
 
+		DELAY_US(1000);
+
+		//send data to BBB
+		CAN_DATA_UNION data;
+		data.f = LED_STATUS();
+		send_data(BIC_ID_INDEX, LED_INDEX, data);
+
 		if (new_data) {
-			if (can_msg.MSGID.all == BBB_ID) {
+			if (can_msg.MSGID.all == BIC_ID) {
 				CAN_DATA_UNION data;
 
 				data.c2[0] = can_msg.MDL.word.LOW_WORD;

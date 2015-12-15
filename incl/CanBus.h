@@ -22,10 +22,29 @@
 #define BAT_ID 0x9555AAA4 // Battery converter
 #define WIN_ID 0x9555AAA5 // wind turbine converter
 
+#define RES_HB_ID 0x9555AAA6 // resource manager
+#define BIC_HB_ID 0x9555AAA7 // bidirectional converter
+#define PV_HB_ID 0x9555AAA8 // PV converter
+#define BAT_HB_ID 0x9555AAA9 // Battery converter
+#define WIN_HB_ID 0x9555AAAA // wind turbine converter
+
+#define BBB_ID_INDEX 0 // beaglebone black can bus id
+#define RES_ID_INDEX 1 // resource manager
+#define BIC_ID_INDEX 2 // bidirectional converter
+#define PV_ID_INDEX 3 // PV converter
+#define BAT_ID_INDEX 4 // Battery converter
+#define WIN_ID_INDEX 5 // wind turbine converter
+
+#define RES_HB_ID_INDEX 6 // resource manager
+#define BIC_HB_ID_INDEX 7 // bidirectional converter
+#define PV_HB_ID_INDEX 8 // PV converter
+#define BAT_HB_ID_INDEX 9 // Battery converter
+#define WIN_HB_ID_INDEX 10 // wind turbine converter
+
+
 #define HEART_BEAT_INDEX 0
 #define LED_INDEX 1
 #define ON_OFF_INDEX 2
-
 
 typedef union {
 	float32 f;
@@ -43,6 +62,7 @@ extern int16 new_data;
 #define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
 #define LED_ON() GpioDataRegs.GPASET.bit.GPIO26 = 1
 #define LED_OFF() GpioDataRegs.GPACLEAR.bit.GPIO26 = 1
+#define LED_STATUS() GpioDataRegs.GPADAT.bit.GPIO26
 
 void
 configureEcanB(void);

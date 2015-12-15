@@ -88,11 +88,11 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX3.MSGID.all = PV_ID;
 	ECanbMboxes.MBOX4.MSGID.all = BAT_ID;
 	ECanbMboxes.MBOX5.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX6.MSGID.all = 0x9555AAA6;
-	ECanbMboxes.MBOX7.MSGID.all = 0x9555AAA7;
-	ECanbMboxes.MBOX8.MSGID.all = 0x9555AAA8;
-	ECanbMboxes.MBOX9.MSGID.all = 0x9555AAA9;
-	ECanbMboxes.MBOX10.MSGID.all = 0x9555AAAA;
+	ECanbMboxes.MBOX6.MSGID.all = RES_HB_ID;
+	ECanbMboxes.MBOX7.MSGID.all = BIC_HB_ID;
+	ECanbMboxes.MBOX8.MSGID.all = PV_HB_ID;
+	ECanbMboxes.MBOX9.MSGID.all = BAT_HB_ID;
+	ECanbMboxes.MBOX10.MSGID.all = WIN_HB_ID;
 	ECanbMboxes.MBOX11.MSGID.all = 0x9555AAAB;
 	ECanbMboxes.MBOX12.MSGID.all = 0x9555AAAC;
 	ECanbMboxes.MBOX13.MSGID.all = 0x9555AAAD;
@@ -106,11 +106,11 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX19.MSGID.all = PV_ID;
 	ECanbMboxes.MBOX20.MSGID.all = BAT_ID;
 	ECanbMboxes.MBOX21.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX22.MSGID.all = 0x9555AAA6;
-	ECanbMboxes.MBOX23.MSGID.all = 0x9555AAA7;
-	ECanbMboxes.MBOX24.MSGID.all = 0x9555AAA8;
-	ECanbMboxes.MBOX25.MSGID.all = 0x9555AAA9;
-	ECanbMboxes.MBOX26.MSGID.all = 0x9555AAAA;
+	ECanbMboxes.MBOX22.MSGID.all = RES_HB_ID;
+	ECanbMboxes.MBOX23.MSGID.all = BIC_HB_ID;
+	ECanbMboxes.MBOX24.MSGID.all = PV_HB_ID;
+	ECanbMboxes.MBOX25.MSGID.all = BAT_HB_ID;
+	ECanbMboxes.MBOX26.MSGID.all = WIN_HB_ID;
 	ECanbMboxes.MBOX27.MSGID.all = 0x9555AAAB;
 	ECanbMboxes.MBOX28.MSGID.all = 0x9555AAAC;
 	ECanbMboxes.MBOX29.MSGID.all = 0x9555AAAD;
@@ -182,7 +182,7 @@ void configureEcanB(void) {
 	EDIS;
 }
 
-void send_data(int16 MBXnbr, char index, CAN_DATA_UNION data) {
+void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
 
 	volatile struct MBOX *Mailbox;
 //  for(MBXnbr)
@@ -192,7 +192,8 @@ void send_data(int16 MBXnbr, char index, CAN_DATA_UNION data) {
 	Mailbox->MDL.word.LOW_WORD = data.c2[0];
 	Mailbox->MDL.word.HI_WORD = data.c2[1];
 
-	Mailbox->MDH.byte.BYTE4 = index;
+	Mailbox->MDH.byte.BYTE4 = data_index;
+
 //    }
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
