@@ -15,17 +15,21 @@
 
 //mailbox number
 //
-#define BBB_ID 0x9555AAA0
-#define MBX_RES 0 // resource manager
-#define MBX_BIC 1 // bidirectional converter
-#define MBX_PV 2 // PV converter
-#define MBX_BAT 3 // Battery converter
-#define MBX_WIN 4 // wind turbine converter
+#define BBB_ID 0x9555AAA0 // beaglebone black can bus id
+#define RES_ID 0x9555AAA1 // resource manager
+#define BIC_ID 0x9555AAA2 // bidirectional converter
+#define PV_ID 0x9555AAA3 // PV converter
+#define BAT_ID 0x9555AAA4 // Battery converter
+#define WIN_ID 0x9555AAA5 // wind turbine converter
+
+#define HEART_BEAT_INDEX 0
 #define LED_INDEX 1
+#define ON_OFF_INDEX 2
+
 
 typedef union {
-    float32 f;
-    Uint16 c2[2];
+	float32 f;
+	Uint16 c2[2];
 } CAN_DATA_UNION;
 
 // Global variable for this example
@@ -35,6 +39,10 @@ extern int16 new_data;
 
 #define TRUE 1
 #define FALSE 0
+
+#define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
+#define LED_ON() GpioDataRegs.GPASET.bit.GPIO26 = 1
+#define LED_OFF() GpioDataRegs.GPACLEAR.bit.GPIO26 = 1
 
 void
 configureEcanB(void);

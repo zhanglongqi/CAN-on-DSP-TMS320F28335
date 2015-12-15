@@ -54,8 +54,8 @@ interrupt void cpu_timer0_isr(void) {
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
-	char index = 0;
+
 	CAN_DATA_UNION data;
 	data.f=1;
-	send_data(0, index, data);
+	send_data(0, HEART_BEAT_INDEX, data);
 }

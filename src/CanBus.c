@@ -1,9 +1,5 @@
 #include <CanBus.h>
 
-#define BLINK_LED() GpioDataRegs.GPATOGGLE.bit.GPIO26 = 1
-#define LED_ON() GpioDataRegs.GPASET.bit.GPIO26 = 1
-#define LED_OFF() GpioDataRegs.GPACLEAR.bit.GPIO26 = 1
-
 // Global variable
 
 struct MBOX can_msg;
@@ -86,12 +82,12 @@ void configureEcanB(void) {
 
 	// Mailboxs can be written to 16-bits or 32-bits at a time
 	// Write to the MSGID field of TRANSMIT mailboxes MBOX0 - 15
-	ECanbMboxes.MBOX0.MSGID.all = 0x9555AAA0;
-	ECanbMboxes.MBOX1.MSGID.all = 0x9555AAA1;
-	ECanbMboxes.MBOX2.MSGID.all = 0x9555AAA2;
-	ECanbMboxes.MBOX3.MSGID.all = 0x9555AAA3;
-	ECanbMboxes.MBOX4.MSGID.all = 0x9555AAA4;
-	ECanbMboxes.MBOX5.MSGID.all = 0x9555AAA5;
+	ECanbMboxes.MBOX0.MSGID.all = BBB_ID;
+	ECanbMboxes.MBOX1.MSGID.all = RES_ID;
+	ECanbMboxes.MBOX2.MSGID.all = BIC_ID;
+	ECanbMboxes.MBOX3.MSGID.all = PV_ID;
+	ECanbMboxes.MBOX4.MSGID.all = BAT_ID;
+	ECanbMboxes.MBOX5.MSGID.all = WIN_ID;
 	ECanbMboxes.MBOX6.MSGID.all = 0x9555AAA6;
 	ECanbMboxes.MBOX7.MSGID.all = 0x9555AAA7;
 	ECanbMboxes.MBOX8.MSGID.all = 0x9555AAA8;
@@ -104,12 +100,12 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX15.MSGID.all = 0x9555AAAF;
 
 	// Write to the MSGID field of RECEIVE mailboxes MBOX16 - 31
-	ECanbMboxes.MBOX16.MSGID.all = 0x9555AAA0;
-	ECanbMboxes.MBOX17.MSGID.all = 0x9555AAA1;
-	ECanbMboxes.MBOX18.MSGID.all = 0x9555AAA2;
-	ECanbMboxes.MBOX19.MSGID.all = 0x9555AAA3;
-	ECanbMboxes.MBOX20.MSGID.all = 0x9555AAA4;
-	ECanbMboxes.MBOX21.MSGID.all = 0x9555AAA5;
+	ECanbMboxes.MBOX16.MSGID.all = BBB_ID;
+	ECanbMboxes.MBOX17.MSGID.all = RES_ID;
+	ECanbMboxes.MBOX18.MSGID.all = BIC_ID;
+	ECanbMboxes.MBOX19.MSGID.all = PV_ID;
+	ECanbMboxes.MBOX20.MSGID.all = BAT_ID;
+	ECanbMboxes.MBOX21.MSGID.all = WIN_ID;
 	ECanbMboxes.MBOX22.MSGID.all = 0x9555AAA6;
 	ECanbMboxes.MBOX23.MSGID.all = 0x9555AAA7;
 	ECanbMboxes.MBOX24.MSGID.all = 0x9555AAA8;

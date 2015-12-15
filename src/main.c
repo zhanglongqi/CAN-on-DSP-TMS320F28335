@@ -59,7 +59,6 @@ void main(void) {
 		if (new_data) {
 			if (can_msg.MSGID.all == BBB_ID) {
 				CAN_DATA_UNION data;
-				data.f=39978.3;
 
 				data.c2[0] = can_msg.MDL.word.LOW_WORD;
 				data.c2[1] = can_msg.MDL.word.HI_WORD;
