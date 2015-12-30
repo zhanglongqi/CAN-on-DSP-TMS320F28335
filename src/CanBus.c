@@ -193,7 +193,9 @@ void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
 	Mailbox->MDL.word.HI_WORD = data.c2[1];
 
 	Mailbox->MDH.byte.BYTE4 = data_index;
-
+	Mailbox->MDH.byte.BYTE5 = 0x00;
+	Mailbox->MDH.byte.BYTE6 = 0x00;
+	Mailbox->MDH.byte.BYTE7 = 0x00;
 //    }
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
