@@ -10,13 +10,6 @@
 #include <CanBus.h>
 #include <timer.h>
 
-#define READY 1
-#define SOFTSTART 2
-#define RUN	3
-#define SOFTOFF 4
-#define FAULT 5
-#define DEBUG 6
-
 void main(void) {
 
 	//0. init Sys
@@ -54,9 +47,10 @@ void main(void) {
 	configureTimer0();
 
 	configureEcanB();
+
 	for (;;) {
 
-		DELAY_US(1000);
+		DELAY_US(100000);
 
 		//send data to BBB
 		CAN_DATA_UNION data;

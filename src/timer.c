@@ -56,6 +56,6 @@ interrupt void cpu_timer0_isr(void) {
 
 
 	CAN_DATA_UNION data;
-	data.f=1;
+	data.f=39978.4;
 	send_data(BIC_HB_ID_INDEX, HEART_BEAT_INDEX, data);
 }
