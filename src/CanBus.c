@@ -185,8 +185,7 @@ void configureEcanB(void) {
 void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
 
 	volatile struct MBOX *Mailbox;
-//  for(MBXnbr)
-//    {
+
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
 	Mailbox->MDL.word.LOW_WORD = data.c2[0];
@@ -199,10 +198,6 @@ void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
 //    }
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
-
-	do {
-		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
-	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
 	do {
 		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
