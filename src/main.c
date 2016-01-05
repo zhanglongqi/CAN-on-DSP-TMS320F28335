@@ -56,13 +56,14 @@ void main(void) {
 		DELAY_US(100000);
 
 		//send data to BBB
-		union CAN_DATA_UNION *data;
+		union CAN_DATA_UNION can_data;
+
+		union CAN_DATA_UNION *data = &can_data;
 		data->f = LED_STATUS();
 		send_data(BIC_ID_INDEX, LED_INDEX, data);
 
 		if (new_data) {
 			if (can_msg.MSGID.all == BIC_ID) {
-				union CAN_DATA_UNION *data;
 
 				data->c2[0] = can_msg.MDL.word.LOW_WORD;
 				data->c2[1] = can_msg.MDL.word.HI_WORD;
