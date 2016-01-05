@@ -11,7 +11,6 @@
 #include "DSP2833x_Device.h"
 #include "DSP2833x_GlobalPrototypes.h"
 #include "DSP2833x_Examples.h"
-#include <stdio.h>
 
 //mailbox number
 //

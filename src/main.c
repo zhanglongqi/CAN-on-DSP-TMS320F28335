@@ -7,8 +7,8 @@
 #include "GPIO_Driver.h"
 #include "usDelay.h"
 
-#include <CanBus.h>
-#include <timer.h>
+#include "CanBus.h"
+#include "timer.h"
 
 void main(void) {
 
@@ -24,7 +24,7 @@ void main(void) {
 
 	//ram Funcs
 
-	//	MemCopy(&RamfuncsLoadStart, &RamfuncsLoadEnd, &RamfuncsRunStart);
+	MemCopy(&RamfuncsLoadStart, &RamfuncsLoadEnd, &RamfuncsRunStart);
 
 	InitFlash();
 	// Initialize the PIE vector table with pointers to the shell Interrupt
