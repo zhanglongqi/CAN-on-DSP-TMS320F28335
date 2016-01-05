@@ -1,3 +1,9 @@
+/*
+ * CanBus.c
+ *
+ *  Created on: Sep 9, 2015
+ *      Author: LongQi
+ */
 #include "CanBus.h"
 
 // Global variable
@@ -182,14 +188,15 @@ void configureEcanB(void) {
 	EDIS;
 }
 
-void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
+void send_data(int16 MBXnbr, char data_index, union CAN_DATA_UNION *data) {
 
 	volatile struct MBOX *Mailbox;
-
+//  for(MBXnbr)
+//    {
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
-	Mailbox->MDL.word.LOW_WORD = data.c2[0];
-	Mailbox->MDL.word.HI_WORD = data.c2[1];
+	Mailbox->MDL.word.LOW_WORD = data->c2[0];
+	Mailbox->MDL.word.HI_WORD = data->c2[1];
 
 	Mailbox->MDH.byte.BYTE4 = data_index;
 	Mailbox->MDH.byte.BYTE5 = 0x00;
@@ -197,13 +204,13 @@ void send_data(int16 MBXnbr, char data_index, CAN_DATA_UNION data) {
 	Mailbox->MDH.byte.BYTE7 = 0x00;
 //    }
 //******************used for transmit begin*****************
-	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for all transmit mailboxes
+	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for the transmit mailboxes
 
-	do {
-		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
-	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
+//	do {
+//		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
+//	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
-	ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
+//	ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
 //******************used for transmit end*****************
 }
 

@@ -1,5 +1,8 @@
 /*
  * main.c
+ *
+ *  Created on: Sep 9, 2015
+ *      Author: LongQi
  */
 
 #include "DSP2833x_Device.h"     // Device Header Include File
@@ -53,19 +56,19 @@ void main(void) {
 		DELAY_US(100000);
 
 		//send data to BBB
-		CAN_DATA_UNION data;
-		data.f = LED_STATUS();
+		union CAN_DATA_UNION *data;
+		data->f = LED_STATUS();
 		send_data(BIC_ID_INDEX, LED_INDEX, data);
 
 		if (new_data) {
 			if (can_msg.MSGID.all == BIC_ID) {
-				CAN_DATA_UNION data;
+				union CAN_DATA_UNION *data;
 
-				data.c2[0] = can_msg.MDL.word.LOW_WORD;
-				data.c2[1] = can_msg.MDL.word.HI_WORD;
+				data->c2[0] = can_msg.MDL.word.LOW_WORD;
+				data->c2[1] = can_msg.MDL.word.HI_WORD;
 
 				if (can_msg.MDH.byte.BYTE4 == LED_INDEX) {
-					if (data.f >= 1)
+					if (data->f >= 1)
 						LED_ON();
 					else
 						LED_OFF();

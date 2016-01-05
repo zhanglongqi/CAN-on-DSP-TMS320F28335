@@ -1,8 +1,8 @@
 /*
  * CanBus.h
  *
- *  Created on: Sep 9, 2013
- *      Author: Mike
+ *  Created on: Sep 9, 2015
+ *      Author: LongQi
  */
 
 #ifndef CANBUS_H_
@@ -45,10 +45,10 @@
 #define LED_INDEX 1
 #define ON_OFF_INDEX 2
 
-typedef union {
+union CAN_DATA_UNION{
 	float32 f;
 	Uint16 c2[2];
-} CAN_DATA_UNION;
+} ;
 
 // Global variable for this example
 extern struct MBOX can_msg;
@@ -68,7 +68,7 @@ configureEcanB(void);
 
 // Prototype statements for functions found within this file.
 void
-send_data(int16 MBXnbr, char index, CAN_DATA_UNION data);
+send_data(int16 MBXnbr, char index,union CAN_DATA_UNION *data);
 static void
 mailbox_check(int32 T1, int32 T2, int32 T3);
 static void
