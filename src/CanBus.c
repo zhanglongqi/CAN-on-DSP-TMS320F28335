@@ -19,7 +19,12 @@ void configureEcanB(void) {
 	can_msg.MDL.all = 0;
 	can_msg.MDH.all = 0;
 	can_msg.MSGID.all = 0;
-
+	
+	// enable sys clock for ecanb
+	EALLOW;
+	SysCtrlRegs.PCLKCR0.bit.ECANBENCLK = 1;    // eCAN-B
+	EDIS;
+	
 	InitECanb();
 
 	//InitECanbGpio();
@@ -152,11 +157,6 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 8;
 	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 8;
 	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 8;
-
-	// enable sys clock for ecanb
-	EALLOW;
-	SysCtrlRegs.PCLKCR0.bit.ECANBENCLK = 1;    // eCAN-B
-	EDIS;
 
 	// Configure the eCAN for self test mode
 	// Enable the enhanced features of the eCAN.
