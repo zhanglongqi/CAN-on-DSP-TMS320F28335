@@ -32,38 +32,23 @@ void configureEcanB(void) {
 	EALLOW;
 
 	/* Enable internal pull-up for the selected CAN pins */
-	// Pull-ups can be enabled or disabled by the user.
-	// This will enable the pullups for the specified pins.
-	// Comment out other unwanted lines.
-	//	GpioCtrlRegs.GPAPUD.bit.GPIO8 = 0;	  // Enable pull-up for GPIO8  (CANTXB)
-	//  GpioCtrlRegs.GPAPUD.bit.GPIO12 = 0;   // Enable pull-up for GPIO12 (CANTXB)
-	//  GpioCtrlRegs.GPAPUD.bit.GPIO16 = 0;   // Enable pull-up for GPIO16 (CANTXB)
+
 	GpioCtrlRegs.GPAPUD.bit.GPIO20 = 0;   // Enable pull-up for GPIO20 (CANTXB)
 
-	//	GpioCtrlRegs.GPAPUD.bit.GPIO10 = 0;	  // Enable pull-up for GPIO10 (CANRXB)
-	//  GpioCtrlRegs.GPAPUD.bit.GPIO13 = 0;   // Enable pull-up for GPIO13 (CANRXB)
-	//  GpioCtrlRegs.GPAPUD.bit.GPIO17 = 0;   // Enable pull-up for GPIO17 (CANRXB)
+
 	GpioCtrlRegs.GPAPUD.bit.GPIO21 = 0;   // Enable pull-up for GPIO21 (CANRXB)
 
 	/* Set qualification for selected CAN pins to asynch only */
 	// Inputs are synchronized to SYSCLKOUT by default.
 	// This will select asynch (no qualification) for the selected pins.
-	// Comment out other unwanted lines.
-	//    GpioCtrlRegs.GPAQSEL1.bit.GPIO10 = 3; // Asynch qual for GPIO10 (CANRXB)
-	//  GpioCtrlRegs.GPAQSEL1.bit.GPIO13 = 3; // Asynch qual for GPIO13 (CANRXB)
-	//  GpioCtrlRegs.GPAQSEL2.bit.GPIO17 = 3; // Asynch qual for GPIO17 (CANRXB)
+
 	GpioCtrlRegs.GPAQSEL2.bit.GPIO21 = 3; // Asynch qual for GPIO21 (CANRXB)
 
 	/* Configure eCAN-B pins using GPIO regs*/
 	// This specifies which of the possible GPIO pins will be eCAN functional pins.
-	//	GpioCtrlRegs.GPAMUX1.bit.GPIO8 = 2;   // Configure GPIO8 for CANTXB operation
-	//  GpioCtrlRegs.GPAMUX1.bit.GPIO12 = 2;  // Configure GPIO12 for CANTXB operation
-	//  GpioCtrlRegs.GPAMUX2.bit.GPIO16 = 2;  // Configure GPIO16 for CANTXB operation
+
 	GpioCtrlRegs.GPAMUX2.bit.GPIO20 = 3; // Configure GPIO20 for CANTXB operation
 
-	//	GpioCtrlRegs.GPAMUX1.bit.GPIO10 = 2;  // Configure GPIO10 for CANRXB operation
-	//  GpioCtrlRegs.GPAMUX1.bit.GPIO13 = 2;  // Configure GPIO13 for CANRXB operation
-	//  GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 2;  // Configure GPIO17 for CANRXB operation
 	GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 3; // Configure GPIO21 for CANRXB operation
 
 	EDIS;
