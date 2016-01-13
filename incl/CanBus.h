@@ -40,20 +40,24 @@
 #define BAT_HB_ID_INDEX 9 // Battery converter
 #define WIN_HB_ID_INDEX 10 // wind turbine converter
 
-
 #define HEART_BEAT_INDEX 0
 #define LED_INDEX 1
 #define ON_OFF_INDEX 2
 
-union CAN_DATA_UNION{
+typedef union CAN_DATA_UNION {
 	float32 f;
 	Uint16 c2[2];
-} ;
+} CAN_DATA_UNION;
+struct CAN_DATA {
+	CAN_DATA_UNION data;
+	Uint16 index;
+};
 
 // Global variable for this example
 extern struct MBOX can_msg;
 extern struct ECAN_REGS ECanbShadow;
 extern int16 new_data;
+extern struct CAN_DATA can_data;
 
 #define TRUE 1
 #define FALSE 0
@@ -68,7 +72,7 @@ configureEcanB(void);
 
 // Prototype statements for functions found within this file.
 void
-send_data(int16 MBXnbr, char index,union CAN_DATA_UNION *data);
+send_data(int16 MBXnbr, char index, struct CAN_DATA data);
 static void
 mailbox_check(int32 T1, int32 T2, int32 T3);
 static void

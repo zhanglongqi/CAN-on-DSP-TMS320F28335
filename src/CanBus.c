@@ -11,6 +11,8 @@
 struct MBOX can_msg;
 struct ECAN_REGS ECanbShadow;
 int16 new_data = FALSE;
+struct CAN_DATA can_data2;
+struct CAN_DATA can_data;
 
 void configureEcanB(void) {
 
@@ -188,15 +190,15 @@ void configureEcanB(void) {
 	EDIS;
 }
 
-void send_data(int16 MBXnbr, char data_index, union CAN_DATA_UNION *data) {
+void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
 
 	volatile struct MBOX *Mailbox;
 //  for(MBXnbr)
 //    {
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
-	Mailbox->MDL.word.LOW_WORD = data->c2[0];
-	Mailbox->MDL.word.HI_WORD = data->c2[1];
+	Mailbox->MDL.word.LOW_WORD = can_data.data.c2[0];
+	Mailbox->MDL.word.HI_WORD = can_data.data.c2[1];
 
 	Mailbox->MDH.byte.BYTE4 = data_index;
 	Mailbox->MDH.byte.BYTE5 = 0x00;

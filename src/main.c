@@ -55,21 +55,22 @@ void main(void) {
 
 		DELAY_US(100000);
 
-		//send data to BBB
-		union CAN_DATA_UNION can_data;
+		//send data begin
+		struct CAN_DATA can_data_to_send_1;
+		can_data_to_send_1.data.f = LED_STATUS();
+		send_data(BIC_ID_INDEX, LED_INDEX, can_data_to_send_1);
+		//send end
 
-		union CAN_DATA_UNION *data = &can_data;
-		data->f = LED_STATUS();
-		send_data(BIC_ID_INDEX, LED_INDEX, data);
+		//receive data begin
+		if (new_data) { // check if new data come
+			if (can_msg.MSGID.all == BIC_ID) { //
 
-		if (new_data) {
-			if (can_msg.MSGID.all == BIC_ID) {
+				can_data.data.c2[0] = can_msg.MDL.word.LOW_WORD;
+				can_data.data.c2[1] = can_msg.MDL.word.HI_WORD;
 
-				data->c2[0] = can_msg.MDL.word.LOW_WORD;
-				data->c2[1] = can_msg.MDL.word.HI_WORD;
-
-				if (can_msg.MDH.byte.BYTE4 == LED_INDEX) {
-					if (data->f >= 1)
+				switch (can_msg.MDH.byte.BYTE4) {
+				case LED_INDEX:
+					if (can_data.data.f >= 1)
 						LED_ON();
 					else
 						LED_OFF();
@@ -77,6 +78,7 @@ void main(void) {
 			}
 			new_data = FALSE;
 		}
+		//receive data end
 	}
 }
 
