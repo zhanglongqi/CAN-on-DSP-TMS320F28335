@@ -148,6 +148,8 @@ void configureEcanB(void) {
 	ECanbShadow.CANMC.bit.STM = 0;    // Configure CAN for normal mode
 	ECanbRegs.CANMC.all = ECanbShadow.CANMC.all;
 	EDIS;
+    // todo check CANMC.SCB eCAN mode
+    // todo timestamp function 
 
 	//Initial for interupt for receiving event only
 	EALLOW;
@@ -209,6 +211,7 @@ static void mailbox_read(int16 MBXnbr) {
 interrupt void ecan1_intb_isr(void) {
 	int j;
 	for (j = 16; j < 32; j++) {         // Read 16 mailboxes
+        // todo confirm if need shadow register here
 		if ((ECanbRegs.CANRMP.all >> j) && 0x1) { // only read the mail box which received message
 
 			mailbox_read(j);       // This func reads the indicated mailbox data
