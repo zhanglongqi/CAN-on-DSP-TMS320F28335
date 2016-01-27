@@ -92,5 +92,9 @@
 			<name>INSTALLROOT_2833X_V140</name>
 			<value>$%7BPARENT-1-CCS_INSTALL_ROOT%7D/controlSUITE/device_support/f2833x/v140</value>
 		</variable>
+		<variable>
+			<name>INSTALLROOT_F2833X_V141</name>
+			<value>$%7BPARENT-1-CCS_INSTALL_ROOT%7D/controlSUITE/device_support/f2833x/v141</value>
+		</variable>
 	</variableList>
 </projectDescription>
