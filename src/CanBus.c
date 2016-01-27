@@ -123,22 +123,22 @@ void configureEcanB(void) {
 	ECanbRegs.CANME.all = 0xFFFFFFFF; // after this message id can not be changed
 
 	// Specify that 8 bits will be sent/received
-	ECanbMboxes.MBOX0.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX1.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX2.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX3.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX4.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX5.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX6.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX7.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX8.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX9.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX10.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX11.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX12.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 8;
-	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 8;
+	ECanbMboxes.MBOX0.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX1.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX2.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX3.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX4.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX5.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX6.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX7.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX8.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX9.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX10.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX11.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX12.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 5;
 
 	// Configure the eCAN for self test mode
 	// Enable the enhanced features of the eCAN.
@@ -182,17 +182,16 @@ void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
 	Mailbox->MDL.word.HI_WORD = can_data.data.c2[1];
 
 	Mailbox->MDH.byte.BYTE4 = data_index;
-	Mailbox->MDH.byte.BYTE5 = 0x00;
-	Mailbox->MDH.byte.BYTE6 = 0x00;
-	Mailbox->MDH.byte.BYTE7 = 0x00;
+
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for the transmit mailboxes
 
-//	do {
-//		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
-//	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
+	// todo add timer to avoid CPU stop when connection lost
+	do {
+		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
+	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
-//	ECanbRegs.CANTA.all = 0x0000FFFF;   // Clear all TAn
+	ECanbRegs.CANTA.all =  0x1 << MBXnbr;   // Clear TAn
 //******************used for transmit end*****************
 }
 
