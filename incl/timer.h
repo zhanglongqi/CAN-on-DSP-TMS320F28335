@@ -14,4 +14,5 @@
 void configureTimer0();
 interrupt void cpu_timer0_isr(void);
 
+extern float32 heartbeat;
 #endif /* INCL_TIMER_H_ */

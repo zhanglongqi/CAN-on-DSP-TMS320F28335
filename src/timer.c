@@ -7,6 +7,8 @@
 #include "timer.h"
 #include "CanBus.h"
 
+float32 heartbeat = 0;
+
 void configureTimer0() {
 	DINT;
 	// Disable CPU interrupts
@@ -54,7 +56,7 @@ interrupt void cpu_timer0_isr(void) {
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
-	struct CAN_DATA heartbeat;
-	heartbeat.data.f = 39978.4;
-	send_data(BIC_HB_ID_INDEX, HEART_BEAT_INDEX, heartbeat);
+	struct CAN_DATA data_to_send;
+	data_to_send.data.f = heartbeat++;
+	send_data(BIC_HB_ID_INDEX, HEART_BEAT_INDEX, data_to_send);
 }
