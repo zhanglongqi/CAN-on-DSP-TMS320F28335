@@ -19,12 +19,12 @@ void configureEcanB(void) {
 	can_msg.MDL.all = 0;
 	can_msg.MDH.all = 0;
 	can_msg.MSGID.all = 0;
-	
+
 	// enable sys clock for ecanb
 	EALLOW;
 	SysCtrlRegs.PCLKCR0.bit.ECANBENCLK = 1;    // eCAN-B
 	EDIS;
-	
+
 	InitECanb();
 
 	//InitECanbGpio();
@@ -35,18 +35,15 @@ void configureEcanB(void) {
 
 	GpioCtrlRegs.GPAPUD.bit.GPIO20 = 0;   // Enable pull-up for GPIO20 (CANTXB)
 
-
 	GpioCtrlRegs.GPAPUD.bit.GPIO21 = 0;   // Enable pull-up for GPIO21 (CANRXB)
 
 	/* Set qualification for selected CAN pins to asynch only */
 	// Inputs are synchronized to SYSCLKOUT by default.
 	// This will select asynch (no qualification) for the selected pins.
-
 	GpioCtrlRegs.GPAQSEL2.bit.GPIO21 = 3; // Asynch qual for GPIO21 (CANRXB)
 
 	/* Configure eCAN-B pins using GPIO regs*/
 	// This specifies which of the possible GPIO pins will be eCAN functional pins.
-
 	GpioCtrlRegs.GPAMUX2.bit.GPIO20 = 3; // Configure GPIO20 for CANTXB operation
 
 	GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 3; // Configure GPIO21 for CANRXB operation
@@ -178,8 +175,7 @@ void configureEcanB(void) {
 void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
 
 	volatile struct MBOX *Mailbox;
-//  for(MBXnbr)
-//    {
+
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
 	Mailbox->MDL.word.LOW_WORD = can_data.data.c2[0];
@@ -189,7 +185,6 @@ void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
 	Mailbox->MDH.byte.BYTE5 = 0x00;
 	Mailbox->MDH.byte.BYTE6 = 0x00;
 	Mailbox->MDH.byte.BYTE7 = 0x00;
-//    }
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for the transmit mailboxes
 
