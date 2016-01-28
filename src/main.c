@@ -59,7 +59,12 @@ void main(void) {
 		struct CAN_DATA can_data_to_send_1;
 		can_data_to_send_1.data.f = LED_STATUS();
 		send_data(BIC_ID_INDEX, LED_INDEX, can_data_to_send_1);
-		//send end
+
+		int i;
+		for (i = 1; i < 27; i++) {
+			can_data_to_send_1.data.f += i;
+			send_data(BIC_ID_INDEX, LED_INDEX + i, can_data_to_send_1);
+		}
 
 		//receive data begin
 		if (new_data) { // check if new data come
