@@ -56,7 +56,12 @@ interrupt void cpu_timer0_isr(void) {
 	// Acknowledge this interrupt to receive more interrupts from group 1
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
 
+	heartbeat += 1;
 	struct CAN_DATA data_to_send;
-	data_to_send.data.f = heartbeat++;
-	send_data(BIC_HB_ID_INDEX, HEART_BEAT_INDEX, data_to_send);
+
+	data_to_send.data0 = heartbeat + 0;
+	data_to_send.data1 = heartbeat + 1;
+	data_to_send.data2 = heartbeat + 2;
+	data_to_send.index = HEART_BEAT_INDEX;
+	send_data(BIC_HB_ID_INDEX, data_to_send);
 }

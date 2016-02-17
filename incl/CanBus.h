@@ -41,15 +41,15 @@
 #define WIN_HB_ID_INDEX 10 // wind turbine converter
 
 #define HEART_BEAT_INDEX 0
-#define LED_INDEX 1
-#define ON_OFF_INDEX 2
+#define LED_GROUP_INDEX 1
+#define ON_OFF_GROUP_INDEX 2
 
-typedef union CAN_DATA_UNION {
-	float32 f;
-	Uint16 c2[2];
-} CAN_DATA_UNION;
+
 struct CAN_DATA {
-	CAN_DATA_UNION data;
+	Uint32 id;
+	Uint16 data0;
+	Uint16 data1;
+	Uint16 data2;
 	Uint16 index;
 };
 
@@ -72,7 +72,7 @@ configureEcanB(void);
 
 // Prototype statements for functions found within this file.
 void
-send_data(int16 MBXnbr, char index, struct CAN_DATA data);
+send_data(int16 MBXnbr, struct CAN_DATA data);
 static void
 mailbox_check(int32 T1, int32 T2, int32 T3);
 static void

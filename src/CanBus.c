@@ -123,22 +123,22 @@ void configureEcanB(void) {
 	ECanbRegs.CANME.all = 0xFFFFFFFF; // after this message id can not be changed
 
 	// Specify that 8 bits will be sent/received
-	ECanbMboxes.MBOX0.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX1.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX2.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX3.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX4.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX5.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX6.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX7.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX8.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX9.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX10.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX11.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX12.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 5;
-	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 5;
+	ECanbMboxes.MBOX0.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX1.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX2.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX3.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX4.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX5.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX6.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX7.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX8.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX9.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX10.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX11.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX12.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX13.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX14.MSGCTRL.bit.DLC = 7;
+	ECanbMboxes.MBOX15.MSGCTRL.bit.DLC = 7;
 
 	// Configure the eCAN for self test mode
 	// Enable the enhanced features of the eCAN.
@@ -148,8 +148,8 @@ void configureEcanB(void) {
 	ECanbShadow.CANMC.bit.STM = 0;    // Configure CAN for normal mode
 	ECanbRegs.CANMC.all = ECanbShadow.CANMC.all;
 	EDIS;
-    // todo check CANMC.SCB eCAN mode
-    // todo timestamp function 
+	// todo check CANMC.SCB eCAN mode
+	// todo timestamp function
 
 	//Initial for interupt for receiving event only
 	EALLOW;
@@ -174,16 +174,17 @@ void configureEcanB(void) {
 	EDIS;
 }
 
-void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
+void send_data(int16 MBXnbr, struct CAN_DATA can_data) {
 
 	volatile struct MBOX *Mailbox;
 
 	Mailbox = &ECanbMboxes.MBOX0 + MBXnbr;
 
-	Mailbox->MDL.word.LOW_WORD = can_data.data.c2[0];
-	Mailbox->MDL.word.HI_WORD = can_data.data.c2[1];
+	Mailbox->MDL.word.HI_WORD = can_data.data0;
+	Mailbox->MDL.word.LOW_WORD = can_data.data1;
+	Mailbox->MDH.word.HI_WORD = can_data.data2;
 
-	Mailbox->MDH.byte.BYTE4 = data_index;
+	Mailbox->MDH.byte.BYTE6 = can_data.index;
 
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for the transmit mailboxes
@@ -193,7 +194,7 @@ void send_data(int16 MBXnbr, char data_index, struct CAN_DATA can_data) {
 		ECanbShadow.CANTA.all = ECanbRegs.CANTA.all;
 	} while (ECanbShadow.CANTA.all == 0);   // Wait for TA5 bit to be set..
 
-	ECanbRegs.CANTA.all =  0x1 << MBXnbr;   // Clear TAn
+	ECanbRegs.CANTA.all = 0x1 << MBXnbr;   // Clear TAn
 //******************used for transmit end*****************
 }
 
@@ -211,7 +212,7 @@ static void mailbox_read(int16 MBXnbr) {
 interrupt void ecan1_intb_isr(void) {
 	int j;
 	for (j = 16; j < 32; j++) {         // Read 16 mailboxes
-        // todo confirm if need shadow register here
+		// todo confirm if need shadow register here
 		if ((ECanbRegs.CANRMP.all >> j) && 0x1) { // only read the mail box which received message
 
 			mailbox_read(j);       // This func reads the indicated mailbox data
@@ -220,6 +221,11 @@ interrupt void ecan1_intb_isr(void) {
 			ECanbRegs.CANRMP.all = ECanbShadow.CANRMP.all; // clear the Received-Message-Pending Register
 		}
 	}
+	can_data.data0 = can_msg.MDL.word.HI_WORD;
+	can_data.data1 = can_msg.MDL.word.LOW_WORD;
+	can_data.data2 = can_msg.MDH.word.HI_WORD;
+	can_data.index = can_msg.MDH.byte.BYTE6;
+	can_data.id = can_msg.MSGID.all;
 
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
 	new_data = TRUE;
