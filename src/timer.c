@@ -62,6 +62,19 @@ interrupt void cpu_timer0_isr(void) {
 	data_to_send.data0 = heartbeat + 0;
 	data_to_send.data1 = heartbeat + 1;
 	data_to_send.data2 = heartbeat + 2;
-	data_to_send.index = HEART_BEAT_INDEX;
-	send_data(BIC_HB_ID_INDEX, data_to_send);
+
+	for (data_to_send.index = 1; data_to_send.index <= 12;
+			data_to_send.index++) {
+		send_data(Rectifier_1_ID_Index, data_to_send);
+		send_data(Inverter_1_ID_Index, data_to_send);
+
+		send_data(Rectifier_2_ID_Index, data_to_send);
+		send_data(Inverter_2_ID_Index, data_to_send);
+
+//		send_data(Rectifier_3_ID_Index, data_to_send);
+//		send_data(Inverter_3_ID_Index, data_to_send);
+//
+//		send_data(Rectifier_4_ID_Index, data_to_send);
+//		send_data(Inverter_4_ID_Index, data_to_send);
+	}
 }

@@ -55,7 +55,7 @@ void configureEcanB(void) {
 #if (CPU_FRQ_150MHZ)                       // CPU_FRQ_150MHz is defined in DSP2833x_Examples.h
 	/* The following block for all 150 MHz SYSCLKOUT (75 MHz CAN clock) - default. Bit rate = 1 Mbps
 	 See Note at end of file */
-	ECanbShadow.CANBTC.bit.BRPREG = 4; // 4 for 1MHz, 9 for 500KHz, 19 for 250KHz
+	ECanbShadow.CANBTC.bit.BRPREG = 4; // 4 for 1Mbps, 9 for 500Kbps, 19 for 250Kbps, 39 for 125Kbps, 49 for 100Kbps
 	ECanbShadow.CANBTC.bit.TSEG2REG = 2;
 	ECanbShadow.CANBTC.bit.TSEG1REG = 10;
 #endif
@@ -77,40 +77,24 @@ void configureEcanB(void) {
 
 	// Mailboxs can be written to 16-bits or 32-bits at a time
 	// Write to the MSGID field of TRANSMIT mailboxes MBOX0 - 15
-	ECanbMboxes.MBOX0.MSGID.all = BBB_ID;
-	ECanbMboxes.MBOX1.MSGID.all = RES_ID;
-	ECanbMboxes.MBOX2.MSGID.all = BIC_ID;
-	ECanbMboxes.MBOX3.MSGID.all = PV_ID;
-	ECanbMboxes.MBOX4.MSGID.all = BAT_ID;
-	ECanbMboxes.MBOX5.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX6.MSGID.all = RES_HB_ID;
-	ECanbMboxes.MBOX7.MSGID.all = BIC_HB_ID;
-	ECanbMboxes.MBOX8.MSGID.all = PV_HB_ID;
-	ECanbMboxes.MBOX9.MSGID.all = BAT_HB_ID;
-	ECanbMboxes.MBOX10.MSGID.all = WIN_HB_ID;
-	ECanbMboxes.MBOX11.MSGID.all = 0x9555AAAB;
-	ECanbMboxes.MBOX12.MSGID.all = 0x9555AAAC;
-	ECanbMboxes.MBOX13.MSGID.all = 0x9555AAAD;
-	ECanbMboxes.MBOX14.MSGID.all = 0x9555AAAE;
-	ECanbMboxes.MBOX15.MSGID.all = 0x9555AAAF;
+	ECanbMboxes.MBOX0.MSGID.all = Rectifier_1_ID;
+	ECanbMboxes.MBOX1.MSGID.all = Inverter_1_ID;
+	ECanbMboxes.MBOX2.MSGID.all = Rectifier_2_ID;
+	ECanbMboxes.MBOX3.MSGID.all = Inverter_2_ID;
+	ECanbMboxes.MBOX4.MSGID.all = Rectifier_3_ID;
+	ECanbMboxes.MBOX5.MSGID.all = Inverter_3_ID;
+	ECanbMboxes.MBOX6.MSGID.all = Rectifier_4_ID;
+	ECanbMboxes.MBOX7.MSGID.all = Inverter_4_ID;
 
 	// Write to the MSGID field of RECEIVE mailboxes MBOX16 - 31
-	ECanbMboxes.MBOX16.MSGID.all = BBB_ID;
-	ECanbMboxes.MBOX17.MSGID.all = RES_ID;
-	ECanbMboxes.MBOX18.MSGID.all = BIC_ID;
-	ECanbMboxes.MBOX19.MSGID.all = PV_ID;
-	ECanbMboxes.MBOX20.MSGID.all = BAT_ID;
-	ECanbMboxes.MBOX21.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX22.MSGID.all = RES_HB_ID;
-	ECanbMboxes.MBOX23.MSGID.all = BIC_HB_ID;
-	ECanbMboxes.MBOX24.MSGID.all = PV_HB_ID;
-	ECanbMboxes.MBOX25.MSGID.all = BAT_HB_ID;
-	ECanbMboxes.MBOX26.MSGID.all = WIN_HB_ID;
-	ECanbMboxes.MBOX27.MSGID.all = 0x9555AAAB;
-	ECanbMboxes.MBOX28.MSGID.all = 0x9555AAAC;
-	ECanbMboxes.MBOX29.MSGID.all = 0x9555AAAD;
-	ECanbMboxes.MBOX30.MSGID.all = 0x9555AAAE;
-	ECanbMboxes.MBOX31.MSGID.all = 0x9555AAAF;
+	ECanbMboxes.MBOX16.MSGID.all = Rectifier_1_ID;
+	ECanbMboxes.MBOX17.MSGID.all = Inverter_1_ID;
+	ECanbMboxes.MBOX18.MSGID.all = Rectifier_2_ID;
+	ECanbMboxes.MBOX19.MSGID.all = Inverter_2_ID;
+	ECanbMboxes.MBOX20.MSGID.all = Rectifier_3_ID;
+	ECanbMboxes.MBOX21.MSGID.all = Inverter_3_ID;
+	ECanbMboxes.MBOX22.MSGID.all = Rectifier_4_ID;
+	ECanbMboxes.MBOX23.MSGID.all = Inverter_4_ID;
 
 	// Configure Mailboxes 0-15 as Tx, 16-31 as Rx
 	// Since this write is to the entire register (instead of a bit
@@ -185,6 +169,12 @@ void send_data(int16 MBXnbr, struct CAN_DATA can_data) {
 	Mailbox->MDH.word.HI_WORD = can_data.data2;
 
 	Mailbox->MDH.byte.BYTE6 = can_data.index;
+
+//	Mailbox->MDL.byte.BYTE0 = can_data.index;
+//
+//	Mailbox->MDL.word.HI_WORD = can_data.data0;
+//	Mailbox->MDH.word.LOW_WORD = can_data.data1;
+//	Mailbox->MDH.word.HI_WORD = can_data.data2;
 
 //******************used for transmit begin*****************
 	ECanbRegs.CANTRS.all = 0x1 << MBXnbr;  // Set TRS for the transmit mailboxes

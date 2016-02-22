@@ -53,31 +53,6 @@ void main(void) {
 
 	for (;;) {
 
-		DELAY_US(1000000);
-
-		//send data begin
-		struct CAN_DATA can_data_to_send_1;
-		can_data_to_send_1.data0 = LED_STATUS();
-		can_data_to_send_1.data1 = LED_STATUS() + 1;
-		can_data_to_send_1.data2 = LED_STATUS() + 2;
-		can_data_to_send_1.index = LED_GROUP_INDEX;
-		send_data(BIC_ID_INDEX, can_data_to_send_1);
-
-		//receive data begin
-		if (new_data) { // check if new data come
-			if (can_data.id == BIC_ID) { //
-
-				switch (can_data.index) {
-				case LED_GROUP_INDEX:
-					if (can_data.data0 % 2 == 0)
-						LED_ON();
-					else
-						LED_OFF();
-				}
-			}
-			new_data = FALSE;
-		}
-		//receive data end
 	}
 }
 

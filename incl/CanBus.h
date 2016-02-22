@@ -14,31 +14,32 @@
 
 //mailbox number
 //
-#define BBB_ID 0x9555AAA0 // beaglebone black can bus id
-#define RES_ID 0x9555AAA1 // resource manager
-#define BIC_ID 0x9555AAA2 // bidirectional converter
-#define PV_ID 0x9555AAA3 // PV converter
-#define BAT_ID 0x9555AAA4 // Battery converter
-#define WIN_ID 0x9555AAA5 // wind turbine converter
 
-#define RES_HB_ID 0x9555AAA6 // resource manager
-#define BIC_HB_ID 0x9555AAA7 // bidirectional converter
-#define PV_HB_ID 0x9555AAA8 // PV converter
-#define BAT_HB_ID 0x9555AAA9 // Battery converter
-#define WIN_HB_ID 0x9555AAAA // wind turbine converter
+#define Rectifier_1_ID 0x80000001
+#define Inverter_1_ID 0x80000002
 
-#define BBB_ID_INDEX 0 // beaglebone black can bus id
-#define RES_ID_INDEX 1 // resource manager
-#define BIC_ID_INDEX 2 // bidirectional converter
-#define PV_ID_INDEX 3 // PV converter
-#define BAT_ID_INDEX 4 // Battery converter
-#define WIN_ID_INDEX 5 // wind turbine converter
+#define Rectifier_2_ID 0x80000003
+#define Inverter_2_ID 0x80000004
 
-#define RES_HB_ID_INDEX 6 // resource manager
-#define BIC_HB_ID_INDEX 7 // bidirectional converter
-#define PV_HB_ID_INDEX 8 // PV converter
-#define BAT_HB_ID_INDEX 9 // Battery converter
-#define WIN_HB_ID_INDEX 10 // wind turbine converter
+#define Rectifier_3_ID 0x80000005
+#define Inverter_3_ID 0x80000006
+
+#define Rectifier_4_ID 0x80000007
+#define Inverter_4_ID 0x80000008
+
+
+#define Rectifier_1_ID_Index 0
+#define Inverter_1_ID_Index 1
+
+#define Rectifier_2_ID_Index 2
+#define Inverter_2_ID_Index 3
+
+#define Rectifier_3_ID_Index 4
+#define Inverter_3_ID_Index 5
+
+#define Rectifier_4_ID_Index 6
+#define Inverter_4_ID_Index 7
+
 
 #define HEART_BEAT_INDEX 0
 #define LED_GROUP_INDEX 1
