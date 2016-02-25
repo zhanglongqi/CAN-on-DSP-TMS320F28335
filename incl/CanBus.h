@@ -47,10 +47,10 @@
 
 struct CAN_DATA {
 	Uint32 id;
-	Uint16 data0;
-	Uint16 data1;
-	Uint16 data2;
-	Uint16 index;
+	int16 data0;
+	int16 data1;
+	int16 data2;
+	int16 index;
 };
 
 // Global variable for this example
