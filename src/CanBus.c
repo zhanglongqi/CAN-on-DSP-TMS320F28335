@@ -52,13 +52,34 @@ void configureEcanB(void) {
 	//******************InitECanbGpio() end******************
 
 	EALLOW;
+	/* Configure bit timing parameters for eCANB*/
+
+	ECanbShadow.CANMC.all = ECanbRegs.CANMC.all;
+	ECanbShadow.CANMC.bit.CCR = 1;            // Set CCR = 1
+	ECanbRegs.CANMC.all = ECanbShadow.CANMC.all;
+
+	ECanbShadow.CANES.all = ECanbRegs.CANES.all;
+
+	do {
+		ECanbShadow.CANES.all = ECanbRegs.CANES.all;
+	} while (ECanbShadow.CANES.bit.CCE != 1); // Wait for CCE bit to be  cleared..
+
+	ECanbShadow.CANBTC.all = 0;
+
 #if (CPU_FRQ_150MHZ)                       // CPU_FRQ_150MHz is defined in DSP2833x_Examples.h
 	/* The following block for all 150 MHz SYSCLKOUT (75 MHz CAN clock) - default. Bit rate = 1 Mbps
 	 See Note at end of file */
-	ECanbShadow.CANBTC.bit.BRPREG = 4; // 4 for 1MHz, 9 for 500KHz, 19 for 250KHz
+	ECanbShadow.CANBTC.bit.BRPREG = 4; // 4 for 1Mbps, 9 for 500Kbps, 19 for 250Kbps, 39 for 125Kbps, 49 for 100Kbps
 	ECanbShadow.CANBTC.bit.TSEG2REG = 2;
 	ECanbShadow.CANBTC.bit.TSEG1REG = 10;
 #endif
+
+	ECanbRegs.CANBTC.all = ECanbShadow.CANBTC.all;
+
+	ECanbShadow.CANMC.all = ECanbRegs.CANMC.all;
+	ECanbShadow.CANMC.bit.CCR = 0;            // Set CCR = 0
+	ECanbRegs.CANMC.all = ECanbShadow.CANMC.all;
+
 	EDIS;
 
 	EALLOW;
