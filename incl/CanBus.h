@@ -21,7 +21,7 @@
 #define BAT_ID 0x9555AAA4 // Battery converter
 #define WIN_ID 0x9555AAA5 // wind turbine converter
 
-#define RES_FAULT_ID 0x95550006 // resource manager // HB ID is used for fault report
+#define RES_FAULT_ID 0x95550006 // resource manager
 #define BIC_FAULT_ID 0x95550007 // bidirectional converter
 #define PV_FAULT_ID 0x95550008 // PV converter
 #define BAT_FAULT_ID 0x95550009 // Battery converter
