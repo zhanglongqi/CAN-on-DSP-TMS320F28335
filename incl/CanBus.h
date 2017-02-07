@@ -21,11 +21,11 @@
 #define BAT_ID 0x9555AAA4 // Battery converter
 #define WIN_ID 0x9555AAA5 // wind turbine converter
 
-#define RES_HB_ID 0x9555AAA6 // resource manager
-#define BIC_HB_ID 0x9555AAA7 // bidirectional converter
-#define PV_HB_ID 0x9555AAA8 // PV converter
-#define BAT_HB_ID 0x9555AAA9 // Battery converter
-#define WIN_HB_ID 0x9555AAAA // wind turbine converter
+#define RES_FAULT_ID 0x95550006 // resource manager // HB ID is used for fault report
+#define BIC_FAULT_ID 0x95550007 // bidirectional converter
+#define PV_FAULT_ID 0x95550008 // PV converter
+#define BAT_FAULT_ID 0x95550009 // Battery converter
+#define WIN_FAULT_ID 0x9555000A // wind turbine converter
 
 #define BBB_ID_INDEX 0 // beaglebone black can bus id
 #define RES_ID_INDEX 1 // resource manager
@@ -34,11 +34,11 @@
 #define BAT_ID_INDEX 4 // Battery converter
 #define WIN_ID_INDEX 5 // wind turbine converter
 
-#define RES_HB_ID_INDEX 6 // resource manager
-#define BIC_HB_ID_INDEX 7 // bidirectional converter
-#define PV_HB_ID_INDEX 8 // PV converter
-#define BAT_HB_ID_INDEX 9 // Battery converter
-#define WIN_HB_ID_INDEX 10 // wind turbine converter
+#define RES_FAULT_ID_INDEX 6 // resource manager
+#define BIC_FAULT_ID_INDEX 7 // bidirectional converter
+#define PV_FAULT_ID_INDEX 8 // PV converter
+#define BAT_FAULT_ID_INDEX 9 // Battery converter
+#define WIN_FAULT_ID_INDEX 10 // wind turbine converter
 
 #define HEART_BEAT_INDEX 0
 #define LED_GROUP_INDEX 1

@@ -104,11 +104,11 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX3.MSGID.all = PV_ID;
 	ECanbMboxes.MBOX4.MSGID.all = BAT_ID;
 	ECanbMboxes.MBOX5.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX6.MSGID.all = RES_HB_ID;
-	ECanbMboxes.MBOX7.MSGID.all = BIC_HB_ID;
-	ECanbMboxes.MBOX8.MSGID.all = PV_HB_ID;
-	ECanbMboxes.MBOX9.MSGID.all = BAT_HB_ID;
-	ECanbMboxes.MBOX10.MSGID.all = WIN_HB_ID;
+	ECanbMboxes.MBOX6.MSGID.all = RES_FAULT_ID;
+	ECanbMboxes.MBOX7.MSGID.all = BIC_FAULT_ID;
+	ECanbMboxes.MBOX8.MSGID.all = PV_FAULT_ID;
+	ECanbMboxes.MBOX9.MSGID.all = BAT_FAULT_ID;
+	ECanbMboxes.MBOX10.MSGID.all = WIN_FAULT_ID;
 	ECanbMboxes.MBOX11.MSGID.all = 0x9555AAAB;
 	ECanbMboxes.MBOX12.MSGID.all = 0x9555AAAC;
 	ECanbMboxes.MBOX13.MSGID.all = 0x9555AAAD;
@@ -122,16 +122,17 @@ void configureEcanB(void) {
 	ECanbMboxes.MBOX19.MSGID.all = PV_ID;
 	ECanbMboxes.MBOX20.MSGID.all = BAT_ID;
 	ECanbMboxes.MBOX21.MSGID.all = WIN_ID;
-	ECanbMboxes.MBOX22.MSGID.all = RES_HB_ID;
-	ECanbMboxes.MBOX23.MSGID.all = BIC_HB_ID;
-	ECanbMboxes.MBOX24.MSGID.all = PV_HB_ID;
-	ECanbMboxes.MBOX25.MSGID.all = BAT_HB_ID;
-	ECanbMboxes.MBOX26.MSGID.all = WIN_HB_ID;
-	ECanbMboxes.MBOX27.MSGID.all = 0x9555AAAB;
-	ECanbMboxes.MBOX28.MSGID.all = 0x9555AAAC;
-	ECanbMboxes.MBOX29.MSGID.all = 0x9555AAAD;
-	ECanbMboxes.MBOX30.MSGID.all = 0x9555AAAE;
-	ECanbMboxes.MBOX31.MSGID.all = 0x9555AAAF;
+	ECanbMboxes.MBOX22.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX23.MSGID.all = 0xFFFFFFFF;
+
+	ECanbMboxes.MBOX24.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX25.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX26.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX27.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX28.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX29.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX30.MSGID.all = 0xFFFFFFFF;
+	ECanbMboxes.MBOX31.MSGID.all = 0xFFFFFFFF;
 
 	// Configure Mailboxes 0-15 as Tx, 16-31 as Rx
 	// Since this write is to the entire register (instead of a bit
@@ -251,4 +252,3 @@ interrupt void ecan1_intb_isr(void) {
 	PieCtrlRegs.PIEACK.all = PIEACK_GROUP9;
 	new_data = TRUE;
 }
-
